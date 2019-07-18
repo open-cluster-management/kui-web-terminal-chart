@@ -1,0 +1,35 @@
+###############################################################################
+# Licensed Materials - Property of IBM
+# 5737-E67
+# (C) Copyright IBM Corporation 2018, 2019 All Rights Reserved
+# US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+###############################################################################
+
+name: mcm-kui
+replicaCount: 1
+clusterIP: icp-management-ingress
+clusterPort: 8443
+
+proxy:
+  name: kui-proxy
+  ingressPath: mcm-kui
+  service:
+    port: 8081
+  image:
+    repository: ibmcom/kui-proxy
+    tag: latest
+    pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 128Mi
+
+tolerations:
+  - key: "dedicated"
+    operator: "Exists"
+    effect: "NoSchedule"
+  - key: "CriticalAddonsOnly"
+    operator: "Exists"

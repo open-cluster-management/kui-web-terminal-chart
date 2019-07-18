@@ -1,0 +1,57 @@
+###############################################################################
+# Licensed Materials - Property of IBM
+# 5737-E67
+# (C) Copyright IBM Corporation 2018, 2019 All Rights Reserved
+# US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+###############################################################################
+
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: "{{ .Values.name }}"
+  labels:
+    app: "{{ .Values.name }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: {{ .Values.name }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      component: {{ .Values.name }}
+      release: {{ .Release.Name }}
+
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.name }}"
+        component: {{ .Values.name }}
+        release: {{ .Release.Name }}
+      annotations:
+        seccomp.security.alpha.kubernetes.io/pod: docker/default
+    spec:
+      automountServiceAccountToken: false
+      terminationGracePeriodSeconds: 60
+      containers:
+      - name: {{ .Values.proxy.name }}
+        image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag }}"
+        imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+            scheme: HTTPS
+        env:
+        - name: ICP_EXTERNAL_URL
+          value: "https://{{ .Values.clusterIP }}:{{ .Values.clusterPort }}"
+        - name: KUI_INGRESS_PATH
+          value: "{{ .Values.proxy.ingressPath }}"
+ 
+        resources:
+{{ toYaml .Values.proxy.resources | indent 10 }}
+    {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 6 }}
+    {{- end }}
