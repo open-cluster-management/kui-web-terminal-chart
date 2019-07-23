@@ -1,0 +1,38 @@
+os: linux
+sudo: required
+language: generic
+services: docker
+group: bluezone
+
+branches:
+  only:
+    - master
+    - /^[0-9]+\..*$/
+    - /^v[0-9]+\..*$/
+    - /^release-[0-9]+\..*$/
+
+before_script:
+  - make tool
+
+
+jobs:  
+  include:
+    - stage: "lint"
+      name: "Lint"
+      script: make lint
+
+    - stage: test-deploy
+      name: "Deploy to Scratch"
+      if: type = pull_request
+      script:
+        - make build
+        - make release-helm-test
+
+
+    - stage: deploy-master
+      name: "Deploy to Master"
+      if: (branch = master) AND (type = push)
+      script:
+        - make build
+        - make release-helm
+        
