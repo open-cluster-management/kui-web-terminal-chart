@@ -1,7 +1,7 @@
 ARTIFACTORY_HELM_REPO ?= hyc-cloud-private-integration-helm-local
 TEST_ARTIFACTORY_HELM_REPO ?= hyc-cloud-private-scratch-helm-local/mcm-kui-pr-builds
-CHART_VERSION := $(shell cat mcm-kui/Chart.yaml | grep version | awk '{print $$2}')
-CHART_NAME ?= mcm-kui
+CHART_VERSION := $(shell cat ibm-mcm-kui/Chart.yaml | grep version | awk '{print $$2}')
+CHART_NAME ?= ibm-mcm-kui
 
 
 default: build
