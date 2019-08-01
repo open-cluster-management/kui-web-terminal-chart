@@ -30,7 +30,7 @@ Parameter                                        | Description                  
 `clusterIP`                                      | cluster IP                                                | icp-management-ingress
 `clusterPort`                                    | cluster port                                              | 8443                  
 `proxy.name`                                     | name of the proxy container                               | kui-proxy                   
-`proxy.ingressPath`                              | path of the proxy ingress                                 | mcm-kui
+`proxy.ingressPath`                              | path of the proxy ingress                                 | kui
 `proxy.service.port`                             | port of the proxy service                                 | 8081                  
 `proxy.image.repository`                         | image repository of the proxy container                   | ibmcom/kui-proxy
 `proxy.image.tag`                                | image tag of the proxy container                          | latest
