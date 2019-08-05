@@ -27,8 +27,8 @@ Parameter                                        | Description                  
 ------------------------------------------------ | --------------------------------------------------------- | --------------------
 `name`                                           | name of app                                               | mcm-kui                   
 `replicaCount`                                   | number of pod replications                                | 1                   
-`clusterIP`                                      | cluster IP                                                | icp-management-ingress
-`clusterPort`                                    | cluster port                                              | 8443                  
+`proxy.clusterIP`                                | cluster IP                                                | icp-management-ingress
+`proxy.clusterPort`                              | cluster port                                              | 8443                  
 `proxy.name`                                     | name of the proxy container                               | kui-proxy                   
 `proxy.ingressPath`                              | path of the proxy ingress                                 | kui
 `proxy.service.port`                             | port of the proxy service                                 | 8081                  

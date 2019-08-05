@@ -45,7 +45,7 @@ spec:
             scheme: HTTPS
         env:
         - name: ICP_EXTERNAL_URL
-          value: "https://{{ .Values.clusterIP }}:{{ .Values.clusterPort }}"
+          value: "https://{{ .Values.proxy.clusterIP }}:{{ .Values.proxy.clusterPort }}"
         - name: KUI_INGRESS_PATH
           value: "{{ .Values.proxy.ingressPath }}"
  

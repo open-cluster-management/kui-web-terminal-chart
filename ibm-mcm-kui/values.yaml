@@ -7,10 +7,11 @@
 
 name: mcm-kui
 replicaCount: 1
-clusterIP: icp-management-ingress
-clusterPort: 8443
+
 
 proxy:
+  clusterIP: icp-management-ingress
+  clusterPort: 8443
   name: kui-proxy
   ingressPath: kui
   service:
