@@ -40,7 +40,7 @@ spec:
         imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
         readinessProbe:
           httpGet:
-            path: /
+            path: "/status/readinessProbe"
             port: 3000
             scheme: HTTPS
         env:
