@@ -60,10 +60,6 @@ spec:
           value: "https://{{ .Values.proxy.clusterIP }}:{{ .Values.proxy.clusterPort }}"
         - name: KUI_INGRESS_PATH
           value: "{{ .Values.proxy.ingressPath }}"
-        - name: SEARCH_API_URL
-          VALUE: "https://{{ .Values.proxy.clusterIP }}:4010/searchapi/graphql"
-        - name: MCM_API_URL
-          value: "https://{{ .Values.proxy.clusterIP }}:4000/hcmuiapi/graphql"
  
         resources:
 {{ toYaml .Values.proxy.resources | indent 10 }}
