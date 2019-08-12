@@ -1,15 +1,30 @@
-# mcm-kui-chart
+# Visual Web Terminal
+* An interactive terminal that displays rich visualizations of command results.
+
+## Introduction
+The Visual Web Terminal is an enhanced version of Web Terminal.  In addition to displaying text output from user entered commands, it can also display richer visualizations, such as interactive tables of cluster resources in response to certain commands.
+
+## Chart Details
+This chart deploys a single instance of the Visual Web Terminal pod on the master node of Kubernetes cluster.
 
 ## Prerequisites
-* ICP 3.2.0 
+* Kuberenetes 1.11.0 or later, with beta APIs enabled
+* IBM core services including auth-idp service and management-ingress
+
+## Resources Required
+* At least 128Mb of available memory with a limit of 512Mb of available memory
+* At least 250m of available CPU with a limit of 500m CPU
 
 ## Installing the Chart
+_NOTE: Visual Web Terminal is intended to be installed by the Installer for internal chart management, not by a user_
 
-To install the chart:
-
-```console
-$ helm install <chartname>.tgz --name mcm-kui --namespace kube-system --tls
+Only one instance of the Visual Web Terminal should be installed on a cluster.
+To install the chart with release name `mcm-kui`:
+```bash
+$ helm install {chartname.tgz} -f {my-values.yaml} --name mcm-kui --namespace kube-system --tls
 ```
+- Replace `{chartname.tgz}` with the packaged ibm-mcm-kui chart
+- replace `{my-values.yaml}` with the path to a YAML file that specifies the values that are to be used with the install command
 
 ## Uninstalling the Chart
 
@@ -40,4 +55,7 @@ Parameter                                        | Description                  
 `proxy.resources.requests.cpu`                   | kui-proxy cpu requests                                    | 250m
 `proxy.resources.requests.memory`                | kui-proxy memory requests                                 | 128Mi
 `tolerations`                                    | kubernetes pod tolerations                                | 
-                
+
+
+## Limitations
+Only one instance of the Visual Web Terminal should run at a single time, and should be restricted to running only on the master node.

@@ -1,0 +1,1 @@
+You have successfully installed ibm-mcm-kui {{ .Chart.Version }}

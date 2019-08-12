@@ -7,12 +7,14 @@
 
 name: mcm-kui
 replicaCount: 1
-
+nodeSelector:
+  master: 'true'
 
 proxy:
   clusterIP: icp-management-ingress
   clusterPort: 8443
   name: kui-proxy
+  productID: "product-id"
   ingressPath: kui
   service:
     port: 8081

@@ -5,8 +5,7 @@
 # US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 ###############################################################################
 
----
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "{{ .Values.name }}"
@@ -27,17 +26,30 @@ spec:
     metadata:
       labels:
         app: "{{ .Values.name }}"
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+        heritage: {{ .Release.Service }}
+        k8s-app: "{{ .Values.proxy.name }}"
         component: {{ .Values.name }}
         release: {{ .Release.Name }}
       annotations:
+        productName: "visual-web-terminal"
+        productID: "{{ .Values.proxy.productID }}"
+        productVersion: "{{ .Chart.AppVersion }}"
         seccomp.security.alpha.kubernetes.io/pod: docker/default
     spec:
+      nodeSelector:
+        master: "{{ .Values.nodeSelector.master }}"
       automountServiceAccountToken: false
       terminationGracePeriodSeconds: 60
       containers:
       - name: {{ .Values.proxy.name }}
         image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag }}"
         imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
+        livenessProbe:
+          httpGet:
+            path: "/status/livenessProbe"
+            port: 3000
+            scheme: HTTPS
         readinessProbe:
           httpGet:
             path: "/status/readinessProbe"
