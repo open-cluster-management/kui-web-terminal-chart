@@ -36,3 +36,11 @@ tolerations:
     effect: "NoSchedule"
   - key: "CriticalAddonsOnly"
     operator: "Exists"
+
+volumes:
+  kuiCertsName: "kui-proxy-certs"
+  kuiCertsSecretName: "kui-proxy-secret"
+
+volumeMounts:
+  kuiCertsName: "kui-proxy-certs"
+  kuiCertsMountPath: "/etc/certs"
