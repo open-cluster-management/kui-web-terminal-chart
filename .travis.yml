@@ -24,6 +24,8 @@ jobs:
     - stage: test-deploy
       name: "Deploy to Scratch"
       if: type = pull_request
+      before_install:
+        - make init
       script:
         - make build
         - make release-helm-test
@@ -32,6 +34,8 @@ jobs:
     - stage: deploy-master
       name: "Deploy to Master"
       if: (branch = master) AND (type = push)
+      before_install:
+        - make init
       script:
         - make build
         - make release-helm
