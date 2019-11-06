@@ -31,7 +31,7 @@ jobs:
 
     - stage: deploy-master
       name: "Deploy to Master"
-      if: (branch = master) AND (type = push)
+      if: (branch = 3.2.1) AND (type = push)
       script:
         - make build
         - make release-helm

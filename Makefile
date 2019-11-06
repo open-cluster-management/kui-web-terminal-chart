@@ -1,4 +1,5 @@
-ARTIFACTORY_HELM_REPO ?= hyc-cloud-private-integration-helm-local
+FIXPACK_HELM_REPO = hyc-cloud-private-fixpack-helm-virtual
+FIXPACK_HELM_PATH = 3.2.1
 TEST_ARTIFACTORY_HELM_REPO ?= hyc-cloud-private-scratch-helm-local/mcm-kui-pr-builds
 CHART_VERSION := $(shell cat ibm-mcm-kui/Chart.yaml | grep version | awk '{print $$2}')
 CHART_NAME ?= ibm-mcm-kui
@@ -32,7 +33,7 @@ release-helm:
 	@echo "CHART_NAME: $(CHART_NAME)"
 	@echo "CHART_VERSION: $(CHART_VERSION)"
 	curl -f -u$(ARTIFACTORY_USERNAME):$(ARTIFACTORY_APIKEY) -T $(CHART_NAME)-$(CHART_VERSION).tgz \
-	"https://na.artifactory.swg-devops.com/artifactory/$(ARTIFACTORY_HELM_REPO)/$(CHART_NAME)-$(CHART_VERSION).tgz"
+	"https://na.artifactory.swg-devops.com/artifactory/$(FIXPACK_HELM_REPO)/$(FIXPACK_HELM_PATH)/$(CHART_NAME)-$(CHART_VERSION).tgz"
 
 .PHONY: release-helm-test
 ## Push chart archive to scratch

@@ -20,7 +20,7 @@ proxy:
     port: 8081
   image:
     repository: ibmcom/mcm-kui-proxy
-    tag: latest
+    tag: 3.2.1.1911
     pullPolicy: IfNotPresent
   resources:
     limits:
