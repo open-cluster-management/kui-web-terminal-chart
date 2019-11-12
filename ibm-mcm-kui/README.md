@@ -42,6 +42,7 @@ Parameter                                        | Description                  
 ------------------------------------------------ | --------------------------------------------------------- | --------------------
 `name`                                           | name of app                                               | mcm-kui                   
 `replicaCount`                                   | number of pod replications                                | 1                   
+`nodeSelector`                                   | node selector                                             | master: 'true'                   
 `proxy.clusterIP`                                | cluster IP                                                | icp-management-ingress
 `proxy.clusterPort`                              | cluster port                                              | 8443                  
 `proxy.name`                                     | name of the proxy container                               | kui-proxy                   

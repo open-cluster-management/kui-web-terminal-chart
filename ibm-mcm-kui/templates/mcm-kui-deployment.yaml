@@ -37,8 +37,10 @@ spec:
         productVersion: "{{ .Chart.AppVersion }}"
         seccomp.security.alpha.kubernetes.io/pod: docker/default
     spec:
+    {{- if .Values.nodeSelector }}
       nodeSelector:
-        master: "{{ .Values.nodeSelector.master }}"
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
       automountServiceAccountToken: false
       terminationGracePeriodSeconds: 60
       containers:
