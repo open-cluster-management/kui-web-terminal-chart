@@ -1,7 +1,6 @@
 ###############################################################################
 # Licensed Materials - Property of IBM
-# 5737-E67
-# (C) Copyright IBM Corporation 2018, 2019 All Rights Reserved
+# (C) Copyright IBM Corporation 2019 All Rights Reserved
 # US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 ###############################################################################
 
@@ -32,19 +31,38 @@ spec:
         component: {{ .Values.name }}
         release: {{ .Release.Name }}
       annotations:
-        productName: "visual-web-terminal"
-        productID: "{{ .Values.proxy.productID }}"
-        productVersion: "{{ .Chart.AppVersion }}"
         seccomp.security.alpha.kubernetes.io/pod: docker/default
     spec:
+      hostNetwork: false
+      hostPID: false
+      hostIPC: false
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: beta.kubernetes.io/arch
+                  operator: In
+                  values:
+                  {{- if .Values.arch }}
+                  - {{ .Values.arch }}
+                  {{- else }}
+                  - {{ template "kui-proxy.arch" . }}
+                  {{- end }}
+    {{- if .Values.nodeSelector }}
       nodeSelector:
-        master: "{{ .Values.nodeSelector.master }}"
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}
       automountServiceAccountToken: false
       terminationGracePeriodSeconds: 60
       containers:
       - name: {{ .Values.proxy.name }}
         image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag }}"
         imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          runAsUser: 0
         livenessProbe:
           httpGet:
             path: "/status/livenessProbe"

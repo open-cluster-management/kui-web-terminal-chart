@@ -1,0 +1,226 @@
+###############################################################################
+# Licensed Materials - Property of IBM
+# (C) Copyright IBM Corporation 2019 All Rights Reserved
+# US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+###############################################################################
+
+## Metadata for Visual Web Terminal configuration
+## This metadata is used to drive configuration of the Helm chart installation
+
+name:
+  __metadata:
+    name: "name"
+    label: "Name"
+    description: "Name of the deployed application"
+    type: "string"
+    required: true
+
+replicaCount:
+  __metadata:
+    name: "replicaCount"
+    label: "Replica count"
+    description: "How many pods to run simultaneously"
+    type: "number"
+    immutable: true
+    required: true
+
+nodeSelector:
+  __metadata:
+    label: "Node selector criteria"
+    description: "Criteria for selecting node to run on"
+    hidden: true
+  master:
+    __metadata:
+      name: "nodeSelector.master"
+      label: "Master node selector"
+      description: "Determines whether the component is scheduled on the master node"
+      type: "string"
+      immutable: true
+      hidden: true
+
+arch:
+  __metadata:
+    name: "Architecture"
+    label: "Node architecture"
+    description: "Node architecture to deploy to. The helm chart will try to detect the architecture based on the master node."
+    type: "string"
+    immutable: false
+    required: false
+    options:
+      - label: "amd64"
+        value: "amd64"
+      - label: "ppc64le"
+        value: "ppc64le"
+      - label: "s390x"
+        value: "s390x"
+
+proxy:
+  __metadata:
+    label: "Visual Web Terminal core component"
+    description: "Web application that services the Visual Web Terminal"
+    hidden: true
+  clusterIP:
+    __metadata:
+      name: "proxy.clusterIP"
+      label: "Cluster external IP address"
+      description: "The external IP address of the cluster"
+      type: "string"
+      immutable: false
+      required: true
+  clusterPort:
+    __metadata:
+      name: "proxy.clusterPort"
+      label: "Cluster external port"
+      description: "The external port of the cluster"
+      type: "number"
+      immutable: false
+      required: true
+  name:
+    __metadata:
+      name: "proxy.name"
+      label: "Container name"
+      description: "Name of the proxy container"
+      type: "string"
+      required: true
+      immutable: false
+      required: true
+  ingressPath:
+    __metadata:
+      name: "proxy.ingressPath"
+      label: "Ingress path"
+      description: "Path of the proxy ingress"
+      type: "string"
+      immutable: false
+      required: true
+  service:
+    port:
+      __metadata:
+        name: "proxy.service.port"
+        label: "Proxy service port"
+        description: "The port used for the proxy service"
+        type: "number"
+        immutable: false
+        required: true
+  image:
+    repository:
+      __metadata:
+        name: "proxy.image.repository"
+        label: "Repository"
+        description: "Docker image location"
+        type: "string"
+        immutable: true
+        required: true
+    tag:
+      __metadata:
+        name: "proxy.image.tag"
+        label: "Tag"
+        description: "Docker image tag"
+        type: "string"
+        immutable: true
+        required: true
+    pullPolicy:
+      __metadata:
+        name: "proxy.image.pullPolicy"
+        label: "Image pull policy"
+        description: "Docker image pull policy"
+        type: "string"
+        immutable: true
+        required: true
+        options:
+        - label: "Always"
+          value: "Always"
+        - label: "Never"
+          value: "Never"
+        - label: "IfNotPresent"
+          value: "IfNotPresent"
+
+  resources:
+    limits:
+      cpu:
+        __metadata:
+          name: "proxy.resources.limits.cpu"
+          label: "CPU Limit"
+          description: "Maximum CPU amount"
+          type: "string"
+          immutable: false
+          required: false
+      memory:
+        __metadata:
+          name: "proxy.resources.limits.memory"
+          label: "Memory Limit"
+          description: "Maximum memory amount"
+          type: "string"
+          immutable: false
+          required: false
+    requests: 
+      cpu:
+        __metadata:
+          name: "proxy.resources.requests.cpu"
+          label: "Requested CPU"
+          description: "Requested CPU amount"
+          type: "string"
+          immutable: false
+          required: false
+      memory:
+        __metadata:
+          name: "proxy.resources.requests.memory"
+          label: "Requested memory"
+          description: "Requested memory amount"
+          type: "string"
+          immutable: false
+          required: false
+
+tolerations:
+  __metadata:
+    name: "tolerations"
+    label: "Proxy Tolerations"
+    description: "Pod tolerations for assigning to nodes with matching taints"
+    hidden: true
+
+volumes:
+  __metadata:
+    name: "volumes"
+    label: "Volumes"
+    description: "Required proxy pod volumes"
+  kuiCertsName:
+    __metadata:
+      name: "volumes.kuiCertsName"
+      label: "Proxy CA certificate volume name"
+      description: "Proxy certificate volume name"
+      type: "string"
+      immutable: true
+      required: true
+      hidden: true
+  kuiCertsSecretName: 
+    __metadata:
+      name: "volumes.kuiCertsSecretName"
+      label: "Proxy CA certificate secret name"
+      description: "The name of the secret containing the CA certficate of the Visual Web Terminal proxy service"
+      type: "string"
+      immutable: true
+      required: true
+      hidden: true
+
+volumeMounts:
+  __metadata:
+    name: "volumeMounts"
+    label: "Volume Mounts"
+    description: "Required proxy pod volume mounts"
+  kuiCertsName:
+    __metadata:
+      name: "volumeMounts.kuiCertsName"
+      label: "Proxy CA certificate volume mount name"
+      description: "Proxy certificate volume moount name"
+      type: "string"
+      immutable: true
+      required: true
+      hidden: true
+  kuiCertsMountPath: 
+    __metadata:
+      name: "volumes.kuiCertsMountPath"
+      label: "Proxy CA certificate volume mount path"
+      description: "The name of the volume mount path containing the CA certficate of the Visual Web Terminal proxy service"
+      type: "string"
+      immutable: true
+      required: true
+      hidden: true

@@ -9,7 +9,14 @@ This chart deploys a single instance of the Visual Web Terminal pod on the maste
 
 ## Prerequisites
 * Kuberenetes 1.11.0 or later, with beta APIs enabled
-* IBM core services including auth-idp service and management-ingress
+* IBM core services including `auth-idp` service and `management-ingress`
+* ClusterAdministrator role for installation
+
+### PodSecurityPolicy Requirements
+The predefined PodSecurityPolicy name: [`ibm-anyuid-psp`](https://ibm.biz/cpkspec-psp) has been verified for this chart, if your target namespace is bound to this PodSecurityPolicy you can proceed to install the chart.
+
+### Red Hat OpenShift SecurityContextConstraints Requirements
+The predefined SecurityContextConstraints name: [`ibm-anyuid-scc`](https://ibm.biz/cpkspec-scc) has been verified for this chart, if your target namespace is bound to this SecurityContextConstraints resource you can proceed to install the chart.
 
 ## Resources Required
 * At least 128Mb of available memory with a limit of 512Mb of available memory
@@ -34,6 +41,14 @@ To uninstall/delete the deployment:
 $ helm delete mcm-kui --purge --tls
 ```
 
+## Prerequisites
+
+## PodSecurityPolicy Requirements (TBD)
+
+This chart requires a PodSecurityPolicy to be bound to the target namespace prior to installation. Choose either the predefined ibm-restricted-psp PodSecurityPolicy or have your cluster administrator create a custom PodSecurityPolicy for you:
+
+- ibm-anyuid-psp
+
 
 ## Configuration
 The following table lists the configurable parameters of the chart and their default values.
@@ -41,14 +56,15 @@ The following table lists the configurable parameters of the chart and their def
 Parameter                                        | Description                                               | Default
 ------------------------------------------------ | --------------------------------------------------------- | --------------------
 `name`                                           | name of app                                               | mcm-kui                   
-`replicaCount`                                   | number of pod replications                                | 1                   
+`replicaCount`                                   | number of pod replications                                | 1         
+`nodeSelector`                                   | node selector                                             | master: 'true'                             
 `proxy.clusterIP`                                | cluster IP                                                | icp-management-ingress
 `proxy.clusterPort`                              | cluster port                                              | 8443                  
 `proxy.name`                                     | name of the proxy container                               | kui-proxy                   
 `proxy.ingressPath`                              | path of the proxy ingress                                 | kui
 `proxy.service.port`                             | port of the proxy service                                 | 8081                  
 `proxy.image.repository`                         | image repository of the proxy container                   | ibmcom/kui-proxy
-`proxy.image.tag`                                | image tag of the proxy container                          | latest
+`proxy.image.tag`                                | image tag of the proxy container                          | 3.4.0
 `proxy.image.pullPolicy`                         | image pull policy of the proxy container                  | IfNotPresent
 `proxy.resources.limits.cpu`                     | kui-proxy cpu limits                                      | 500m
 `proxy.resources.limits.memory`                  | kui-proxy memory limits                                   | 512Mi

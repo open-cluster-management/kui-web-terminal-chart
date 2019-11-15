@@ -1,0 +1,38 @@
+charts:
+  - archive: file:ibm-mcm-kui-3.4.0.tgz
+    repository-keys:
+      - image.repository
+
+images:
+- image: mcm-kui-proxy:3.4.0
+  references:
+  - repository : mcm-kui-proxy:3.4.0
+    pull-repository:  hyc-cloud-private-stable-docker-local.artifactory.swg-devops.com/ibmcom-amd64/mcm-kui-proxy:3.4.0
+    pull-authorization: 
+      username: 
+        env: ARTIFACTORY_USERNAME 
+      password: 
+        env: ARTIFACTORY_PASSWORD 
+      platform: 
+        os: linux 
+        architecture: amd64
+  - repository : mcm-kui-proxy:3.4.0
+    pull-repository:  hyc-cloud-private-stable-docker-local.artifactory.swg-devops.com/ibmcom-ppc64le/mcm-kui-proxy:3.4.0
+    pull-authorization: 
+      username: 
+        env: ARTIFACTORY_USERNAME 
+      password: 
+        env: ARTIFACTORY_PASSWORD 
+      platform: 
+        os: linux 
+        architecture: ppc64le
+  - repository : mcm-kui-proxy:3.4.0
+    pull-repository:  hyc-cloud-private-stable-docker-local.artifactory.swg-devops.com/ibmcom-s390x/mcm-kui-proxy:3.4.0
+    pull-authorization: 
+      username: 
+        env: ARTIFACTORY_USERNAME 
+      password: 
+        env: ARTIFACTORY_PASSWORD 
+      platform: 
+        os: linux 
+        architecture: s390x
