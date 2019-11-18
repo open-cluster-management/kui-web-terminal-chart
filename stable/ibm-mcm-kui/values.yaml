@@ -1,7 +1,6 @@
 ###############################################################################
 # Licensed Materials - Property of IBM
-# 5737-E67
-# (C) Copyright IBM Corporation 2018, 2019 All Rights Reserved
+# (C) Copyright IBM Corporation 2019 All Rights Reserved
 # US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 ###############################################################################
 
@@ -10,11 +9,12 @@ replicaCount: 1
 nodeSelector:
   master: 'true'
 
+arch: ""
+
 proxy:
   clusterIP: icp-management-ingress
   clusterPort: 8443
   name: kui-proxy
-  productID: "product-id"
   ingressPath: kui
   service:
     port: 8081

@@ -19,3 +19,6 @@
 .project
 .idea/
 *.tmproj
+# Chart tests not to be delivered with chart
+cv-tests/
+ibm_cloud_pak/manifest.yaml

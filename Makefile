@@ -37,14 +37,14 @@ setup:
 .PHONY: lint
 ## Run lint with helm linting tool
 lint: setup
-	helm lint $(CHART_NAME)
+	helm lint stable/$(CHART_NAME)
 
 .PHONY: build
 ## Packages helm-api folder into chart archive
 build: setup
-	helm package --version $(CHART_VERSION) $(CHART_NAME)
+	helm package --version $(CHART_VERSION) stable/$(CHART_NAME)
 	@echo "ALSO PACKAGING AS VERSION 99.99.99 UNTIL COMMON SERVICES PIPELINE COMPLETE"
-	helm package --version 99.99.99 $(CHART_NAME)
+	helm package --version 99.99.99 stable/$(CHART_NAME)
 
 .PHONY: release-helm
 ## Push chart archive to integration (pushes to master only)

@@ -1,0 +1,182 @@
+overrides:
+- rule: ChartNameVersionClassificationMatch
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ Chart.yaml ] 
+  message: "expected chart with the Commercial keyword and no Limited keyword to have a name ending in \"-prod\""
+  reason: "The Visual Web Terminal chart is Commercial, but the chart name does not include prod. Changing chart name could cause problems in upgrade and rollback"
+
+- rule: ChartNameVersionClassificationMatch
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ Chart.yaml ] 
+  message: "expected chart without name ending in \"-dev\" or \"-prod\" to have both the Commercial and Limited keywords"
+  reason: "The Visual Web Terminal chart is Commercial so the Limited keyword was removed, but the chart name does not include prod. Changing chart name could cause problems in upgrade and rollback"
+
+- rule: AppTestExists
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ cv-tests ]
+  message: "no application tests defined"
+  reason: "Organizational decision to remain with existing testing infrastructure rather than transfer to helm testing"
+
+- rule: InstallTestExists
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ cv-tests ]
+  message: "no install tests defined"
+  reason: "Organizational decision to remain with existing testing infrastructure rather than transfer to helm testing"
+
+- rule: NoDefaultServiceAccountName
+  severity: REVIEW
+  reduceTo: INFO
+  filenames: [ templates/mcm-kui-deployment.yaml ]
+  message: "serviceAccountName not defined"
+  reason: "We don't create a custom service account to assign or use."
+
+- rule: HelmTestExists
+  severity: ERROR
+  reduceTo: INFO
+  message: "no helm test defined"
+  reason: "Organizational decision to remain with existing testing infrastructure rather than transfer to helm testing"
+
+- rule: NoDeprecatedAPIs
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ templates/mcm-kui-ingress.yaml ]
+  message: 'apiVersion "extensions/v1beta1" is deprecated on resource "Ingress" and will be removed in Kubernetes 1.20, switch to apiVersion "networking.k8s.io/v1beta1" served since Kubernetes 1.14'
+  reason: "Adopting the new apiVersion impacts upgrade as we may be upgrading from 1.13 systems."
+
+- rule: UseEntitledRegistry
+  severity: WARNING
+  reduceTo: INFO
+  filenames: [ ibm_cloud_pak/manifest.yaml ]
+  # 3 instances
+  message: "recommend using entitled registry path and namespace \"cp.icr.io/cp\""
+  reason: "We are not currently available in the entitled registry ... still trying to find out what the plans are there since Visual Web Terminal is a common service"
+
+- rule: ContainerImageNameIsValid
+  severity: WARNING
+  reduceTo: INFO
+  filenames: [ ibm_cloud_pak/manifest.yaml ]
+  # 3 instances
+  message: "invalid arch \"\""
+  reason: "We are not currently available in the entitled registry ... still trying to find out what the plans are there since Visual Web Terminal is a common service"
+
+- rule: TranslatedLicenseLinkExists
+  severith: ERROR
+  reduceTo: INFO
+  filenames: [ LICENSES ]
+  message: "no link to translated licenses found of the form \"The translated license terms can be viewed here: <link>\""
+  reason: "This is an internal component, bundled with an official IBM Cloud Pak product and that product's license is the one the user should reference"
+
+- rule: RequiredMetadataLabelsDefined
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ templates/mcm-kui-deployment.yaml, templates/mcm-kui-ingress.yaml, templates/mcm-kui-service.yaml, templates/mcm-kui-secret.yaml ]
+  message: ' not defined under metadata.labels'
+  reason: "Moving to new helm labels would break upgrade and rollback per the helm team"
+
+- rule: RequiredMetadataLabelsDefined
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ templates/mcm-kui-deployment.yaml ]
+  message: ' not defined under spec.template.metadata.labels'
+  reason: "Moving to new helm labels would break upgrade and rollback per the helm team"
+
+- rule: NoICPReferences
+  severity: REVIEW
+  reduceTo: INFO
+  filenames: [ README.md ]
+  reason: 'The "icp" reference is part of the name of a service name and not a reference to IBM Cloud Private'
+
+- rule: NoSensitiveInfoInValues
+  severity: REVIEW
+  reduceTo: INFO
+  filenames: [ values.yaml ]
+  message: "potentially secret parameter"
+  reason: "None of the fields indicated have sensitive information.  It is the locations of secrets and keys within them."
+
+- rule: StandardHelmLint
+  severity: INFO
+  filenames: [ Chart.yaml ]
+  message: "icon is recommended"
+  reason: "We are not a user facing, installable service, but installed by Cloud Paks."
+
+- rule: MonitoringDashboardExists
+  severity: WARNING
+  reduceTo: INFO
+  filenames: [ Chart.yaml ]
+  message: "monitoring dashboard resource of kind \"MonitoringDashboard\" and apiVersion \"monitoringcontroller.cloud.ibm.com/v1\" not found"
+  reason: "We are a common service utility UI rather than an external product and does not contain a sample dashboard built-in."
+
+- rule: PodDisruptionBudgetInReadme
+  severity: WARNING
+  reduceTo: INFO
+  message: "no preinstall steps found for PodDisruptionBudgets in Prerequisites of README"
+  reason: "This is a single instance stateless application and can tolerate occasional downtime. If the pod crashes the controller will schedule a replacement pod."
+
+- rule: NoIngressCollisions
+  severity: WARNING
+  reduceTo: INFO
+  filenames: [ templates/mcm-kui-ingress.yaml ]
+  message: " to be parameterized because "
+  reason: "Ingress host is configurable if so desired in the unlikely case of a collision. Visual Web Terminal only supports a single instance so collisions are unlikely"
+
+- rule: IngressRuleHasHost
+  severity: REVIEW
+  reduceTo: INFO
+  filenames: [ templates/mcm-kui-ingress.yaml ]
+  message: "host not defined"
+  reason: "By default we wanted the ingress to match all hosts so no value is provided, however we wanted to leave the opportunity to update it during install if required."
+
+- rule: MeteringAnnotationsDefined
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ templates/mcm-kui-deployment.yaml ]
+  # Trimmed message so over-ride matches
+  message: 'not found under spec.template.metadata.annotations'
+  reason: "Unresolved legal and technical issues, so decision was made to remove annotations for common services"
+
+- rule: ContainerHasDropAll
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ templates/mcm-kui-deployment.yaml ]
+  message: "\"ALL\" not found in spec.template.spec.containers\\[0\\].securityContext.capabilities.drop"
+  reason: "Visual Web Terminal has to run as root to provide multi-user support by creating private user home directories in the container."
+
+- rule: NoRunAsRootUser
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ templates/mcm-kui-deployment.yaml ]
+  message: "UID 0 at spec.template.spec.containers\\[0\\].securityContext.runAsUser not allowed"
+  reason: "Visual Web Terminal has to run as root to provide multi-user support by creating private user home directories in the container."
+
+- rule: CustomPodSecurityInReadme
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ README.md ]
+  message: 'required custom pod security definition not found using regex '
+  reason: "There is an ibm pod security policy specified, a custom policy is not necessary"
+
+- rule: PodSecurityContextDefined
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ templates/mcm-kui-deployment.yaml ]
+  message: "keys for pod security context not defined"
+  reason: "Cannot set runAsNonRoot because Visual Web Terminal has to run as root to provide multi-user support by creating private user home directories in the container."
+
+- rule: NoPrivateIAMEndpoints
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ templates/mcm-kui-deployment.yaml ]
+  message: "in rendered template to access IAM APIs not allowed, use the management ingress at"
+  reason: "This config is for the security middleware component delivered by IAM.  Internal IAM endpoints will be updated for the ingress in the future."
+
+# Chart certification catch-22
+- rule: NoExpiredCertification
+  severity: ERROR
+  reduceTo: INFO
+  filenames: [ ibm_cloud_pak/qualification.yaml ]
+  message: "invalid qualification.issueDate format for \"\", expected MM/YYYY"
+  reason: "Chart needs to get certified first"
