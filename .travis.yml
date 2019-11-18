@@ -19,7 +19,12 @@ jobs:
   include:
     - stage: "lint"
       name: "Lint"
-      script: make lint
+      if: type = pull_request
+      before_install:
+        - make init
+      script: 
+        - make lint
+        - make cv-lint
 
     - stage: test-deploy
       name: "Deploy to Scratch"

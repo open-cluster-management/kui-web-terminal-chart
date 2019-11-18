@@ -3,6 +3,9 @@ TEST_ARTIFACTORY_HELM_REPO ?= hyc-cloud-private-scratch-helm-local/mcm-kui-pr-bu
 
 GITHUB_USER := $(shell echo $(GITHUB_USER) | sed 's/@/%40/g')
 
+CV_VERSION ?= 2.0.9
+CV_RUN_ARGS ?= lint helm stable/$(CHART_NAME)
+
 .PHONY: init\:
 init::
 	@mkdir -p variables
@@ -38,6 +41,11 @@ setup:
 ## Run lint with helm linting tool
 lint: setup
 	helm lint stable/$(CHART_NAME)
+
+.PHONY: cv-lint
+cv-lint:
+	$(SELF) cv:install
+	$(SELF) cv:run
 
 .PHONY: build
 ## Packages helm-api folder into chart archive
