@@ -1,8 +1,12 @@
-os: linux
+dist: xenial
 sudo: required
-language: generic
-services: docker
 group: bluezone
+language: generic
+
+# Environment variables (setup endpoint to IBM github)
+env:
+  global:
+  - OCTOKIT_API_ENDPOINT="https://github.ibm.com/api/v3/"
 
 branches:
   only:
@@ -10,6 +14,28 @@ branches:
     - /^[0-9]+\..*$/
     - /^v[0-9]+\..*$/
     - /^release-[0-9]+\..*$/
+    - /^ga-[0-9]+.*$/
+
+  # The /^ga-[0-9]+.*$/ pattern is for tag testing only, so it can be removed when no one needs to test tagging against commits.
+
+before_install:
+  # Clone build tools & set tools path for follow on processing
+  # The clone command will use the ssh key from the travis settings to clone the repo from github.ibm.com
+  - if [[ ! -z "$BRANCH_OVERRIDE" ]] ; then
+      git clone -b $BRANCH_OVERRIDE https://${GITHUB_USER_ESCAPE}:${GITHUB_TOKEN}@github.ibm.com/IBMPrivateCloud/content-tools.git;
+    else 
+      git clone https://${GITHUB_USER_ESCAPE}:${GITHUB_TOKEN}@github.ibm.com/IBMPrivateCloud/content-tools.git;
+    fi
+  - export toolsPath=`pwd`/content-tools/travis-tools/
+  # Install dependencies & determine chart delta 
+  - $toolsPath/build/bin/installDependencies.sh | true
+  - export changeList=`$toolsPath/build/bin/determineChartDelta.sh | tee determineChartDelta.out | grep 'return determineChartDelta:' | cut -f2 -d:` && cat determineChartDelta.out
+   
+install:
+  # Package for release 
+  - if [[ ! -z "$TRAVIS_TAG" ]] ; then $toolsPath/release/bin/package.sh; fi
+  # Lint and install/test charts (if cv-tests exist)
+  - $toolsPath/cv-test/bin/validateContent.sh | true
 
 before_script:
   - make tool
@@ -44,4 +70,20 @@ jobs:
       script:
         - make build
         - make release-helm
-        
+
+deploy:
+  # scp helm repo(s) to location identified (Note: SSHPASS env variable must contain password)
+  - provider: script
+    skip_cleanup: true
+    script:  $toolsPath/build/bin/deployHelmRepo.sh
+    on:
+      all_branches: true
+  # Publish tagged release
+  - provider: releases
+    skip_cleanup: true
+    api_key: $GITHUB_TOKEN
+    file_glob: true
+    file: repo/stable/*
+    on:
+      tags: true
+
