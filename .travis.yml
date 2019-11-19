@@ -19,6 +19,7 @@ branches:
   # The /^ga-[0-9]+.*$/ pattern is for tag testing only, so it can be removed when no one needs to test tagging against commits.
 
 before_install:
+  - make init
   # Clone build tools & set tools path for follow on processing
   # The clone command will use the ssh key from the travis settings to clone the repo from github.ibm.com
   - if [[ ! -z "$BRANCH_OVERRIDE" ]] ; then
@@ -46,8 +47,6 @@ jobs:
     - stage: "lint"
       name: "Lint"
       if: type = pull_request
-      before_install:
-        - make init
       script: 
         - make lint
         - make cv-lint
@@ -55,8 +54,6 @@ jobs:
     - stage: test-deploy
       name: "Deploy to Scratch"
       if: type = pull_request
-      before_install:
-        - make init
       script:
         - make build
         - make release-helm-test
@@ -65,8 +62,6 @@ jobs:
     - stage: deploy-master
       name: "Deploy to Master"
       if: (branch = master) AND (type = push)
-      before_install:
-        - make init
       script:
         - make build
         - make release-helm
