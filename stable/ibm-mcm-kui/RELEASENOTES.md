@@ -22,6 +22,7 @@ See your Cloud Pak product documentation.
 
 | Chart | Date | Kubernetes Required | Image(s) Supported | Breaking Changes | Details |
 | ----- | ---- | ------------ | ------------------ | ---------------- | ------- |
+| 3.5.0 | Mar 19, 2020 | >=1.11.0 |  | None |  |
 | 3.4.1 | Dec 12, 2019 | >=1.11.0 |  | None |  |
 | 3.4.0 | Nov 22, 2019 | >=1.11.0 |  | None |  |
 | 3.3.0 | Aug 27, 2019 | >=1.11.0 |  | None |  |
