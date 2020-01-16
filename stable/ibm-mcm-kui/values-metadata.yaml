@@ -155,6 +155,42 @@ extensions:
           value: "Never"
         - label: "IfNotPresent"
           value: "IfNotPresent"
+
+  resources:
+    limits:
+      cpu:
+        __metadata:
+          name: "prextensionsoxy.resources.limits.cpu"
+          label: "CPU Limit"
+          description: "Maximum CPU amount"
+          type: "string"
+          immutable: false
+          required: false
+      memory:
+        __metadata:
+          name: "extensions.resources.limits.memory"
+          label: "Memory Limit"
+          description: "Maximum memory amount"
+          type: "string"
+          immutable: false
+          required: false
+    requests: 
+      cpu:
+        __metadata:
+          name: "extensions.resources.requests.cpu"
+          label: "Requested CPU"
+          description: "Requested CPU amount"
+          type: "string"
+          immutable: false
+          required: false
+      memory:
+        __metadata:
+          name: "extensions.resources.requests.memory"
+          label: "Requested memory"
+          description: "Requested memory amount"
+          type: "string"
+          immutable: false
+          required: false
 proxy:
   __metadata:
     label: "Visual Web Terminal core component"
