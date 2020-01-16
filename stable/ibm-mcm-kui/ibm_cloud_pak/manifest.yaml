@@ -36,3 +36,36 @@ images:
       platform: 
         os: linux 
         architecture: s390x
+
+- image: mcm-kui-init:3.5.0
+  references:
+  - repository : mcm-kui-init-amd64:3.5.0
+    pull-repository:  hyc-cloud-private-stable-docker-local.artifactory.swg-devops.com/ibmcom-amd64/mcm-kui-init:3.5.0
+    pull-authorization: 
+      username: 
+        env: ARTIFACTORY_USERNAME 
+      password: 
+        env: ARTIFACTORY_PASSWORD 
+      platform: 
+        os: linux 
+        architecture: amd64
+  - repository : mcm-kui-init-ppc64le:3.5.0
+    pull-repository:  hyc-cloud-private-stable-docker-local.artifactory.swg-devops.com/ibmcom-ppc64le/mcm-kui-init:3.5.0
+    pull-authorization: 
+      username: 
+        env: ARTIFACTORY_USERNAME 
+      password: 
+        env: ARTIFACTORY_PASSWORD 
+      platform: 
+        os: linux 
+        architecture: ppc64le
+  - repository : mcm-kui-init-s390x:3.5.0
+    pull-repository:  hyc-cloud-private-stable-docker-local.artifactory.swg-devops.com/ibmcom-s390x/mcm-kui-init:3.5.0
+    pull-authorization: 
+      username: 
+        env: ARTIFACTORY_USERNAME 
+      password: 
+        env: ARTIFACTORY_PASSWORD 
+      platform: 
+        os: linux 
+        architecture: s390x

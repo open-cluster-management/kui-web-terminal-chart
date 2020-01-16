@@ -180,3 +180,13 @@ overrides:
   filenames: [ ibm_cloud_pak/qualification.yaml ]
   message: "invalid qualification.issueDate format for \"\", expected MM/YYYY"
   reason: "Chart needs to get certified first"
+
+- rule: NoSecretResources
+  severity: ERROR
+  reduceTo: INFO
+  reason: "The secret values are generated, not stored in the chart itself."
+
+- rule: ServiceAccountHasSANamespacePullSecret
+  reason: "The deployment uses the default service account in that namespace. The service account is only mount for init container's download needs."
+  severity: ERROR
+  reduceTo: INFO

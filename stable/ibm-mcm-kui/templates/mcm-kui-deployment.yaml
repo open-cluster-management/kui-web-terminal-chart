@@ -60,6 +60,8 @@ spec:
       - name: {{ .Values.extensions.name }}
         image: "{{ .Values.extensions.image.repository }}:{{ .Values.extensions.image.tag }}"
         imagePullPolicy: {{ .Values.extensions.image.pullPolicy }}
+        resources:
+{{ toYaml .Values.extensions.resources | indent 10 }}
         volumeMounts:
         - name: extension-dir 
           mountPath: {{ .Values.extensions.downloadPath }}

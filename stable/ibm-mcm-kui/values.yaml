@@ -24,6 +24,13 @@ extensions:
     repository: ibmcom/mcm-kui-init
     tag: 3.5.0
     pullPolicy: IfNotPresent
+  resources:
+    limits:
+      cpu: 200m
+      memory: 128Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
 
 proxy:
   clusterIP: icp-management-ingress
