@@ -58,7 +58,7 @@ Parameter                                        | Description                  
 `name`                                           | name of app                                               | mcm-kui                   
 `replicaCount`                                   | number of pod replications                                | 1         
 `nodeSelector`                                   | node selector                                             | master: 'true'                             
-`enableExtensions`                               | Support extensions                                        | kui-initcontainer                             
+`enableExtensions`                               | Support extensions                                        | true                            
 `serviceAccount.roleName`                        | Role name for getting extension CRs                       | kui-initcontainer                             
 `serviceAccount.roleBindingName`                 | Role binding name                                         | kui-initcontainer                             
 `serviceAccount.serviceAccountName`              | Service account name for getting extension CRs            | kui-initcontainer                             
