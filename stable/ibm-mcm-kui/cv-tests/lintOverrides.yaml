@@ -73,7 +73,7 @@ overrides:
 - rule: RequiredMetadataLabelsDefined
   severity: ERROR
   reduceTo: INFO
-  filenames: [ templates/mcm-kui-deployment.yaml, templates/mcm-kui-ingress.yaml, templates/mcm-kui-service.yaml, templates/mcm-kui-secret.yaml, templates/mcm-kui-role.yaml, templates/mcm-kui-role-binding.yaml,templates/mcm-kui-serviceaccount.yaml ,templates/mcm-kui-serviceaccount-secret.yaml]
+  filenames: [ templates/mcm-kui-deployment.yaml, templates/mcm-kui-ingress.yaml, templates/mcm-kui-service.yaml, templates/mcm-kui-secret.yaml, templates/mcm-kui-role.yaml, templates/mcm-kui-role-binding.yaml,templates/mcm-kui-serviceaccount.yaml ]
   message: ' not defined under metadata.labels'
   reason: "Moving to new helm labels would break upgrade and rollback per the helm team"
 
@@ -184,7 +184,7 @@ overrides:
 - rule: NoSecretResources
   severity: ERROR
   reduceTo: INFO
-  filenames: [ templates/mcm-kui-serviceaccount-secret.yaml ]
+  filenames: [ templates/mcm-kui-serviceaccount.yaml ]
   reason: "The secret values are generated, not stored in the chart itself."
 
 - rule: ServiceAccountHasSANamespacePullSecret

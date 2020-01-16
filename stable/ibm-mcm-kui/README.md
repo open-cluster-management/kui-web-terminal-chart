@@ -11,7 +11,6 @@ This chart deploys a single instance of the Visual Web Terminal pod on the maste
 * Kuberenetes 1.11.0 or later, with beta APIs enabled
 * IBM core services including `auth-idp` service and `management-ingress`
 * ClusterAdministrator role for installation
-* KUIExtension CRD is installed
 
 ### PodSecurityPolicy Requirements
 The predefined PodSecurityPolicy name: [`ibm-anyuid-psp`](https://ibm.biz/cpkspec-psp) has been verified for this chart, if your target namespace is bound to this PodSecurityPolicy you can proceed to install the chart.
@@ -59,16 +58,20 @@ Parameter                                        | Description                  
 `name`                                           | name of app                                               | mcm-kui                   
 `replicaCount`                                   | number of pod replications                                | 1         
 `nodeSelector`                                   | node selector                                             | master: 'true'                             
-`enableExtensions`                               | Support extensions                                        | true                             
-`serviceAccount.roleName`                        | Role name for getting extension CRs                       | true                             
-`serviceAccount.roleBindingName`                 | Role binding name                                         | true                             
-`serviceAccount.serviceAccountName`              | Service account name for getting extension CRs            | true                             
-`serviceAccount.serviceAccountSecret`            | Secret name to mount service account token                | true                             
-`extensions.downloadPath`                        | Folder path for sharing extensions between containers     | true                             
-`extensions.name`                                | Container name of the init container                      | true                             
-`extensions.image.repository`                    | image repository of the init container                   | ibmcom/mcm-kui-init
-`extensions.image.tag`                           | image tag of the init container                          | 3.5.0
-`extensions.image.pullPolicy`                    | image pull policy of the init container                  | IfNotPresent
+`enableExtensions`                               | Support extensions                                        | kui-initcontainer                             
+`serviceAccount.roleName`                        | Role name for getting extension CRs                       | kui-initcontainer                             
+`serviceAccount.roleBindingName`                 | Role binding name                                         | kui-initcontainer                             
+`serviceAccount.serviceAccountName`              | Service account name for getting extension CRs            | kui-initcontainer                             
+`serviceAccount.serviceAccountSecret`            | Secret name to mount service account token                | kui-initcontainer-secret                             
+`extensions.downloadPath`                        | Folder path for sharing extensions between containers     | /Downloads                             
+`extensions.name`                                | Container name of the init container                      | mcm-kui-init                             
+`extensions.image.repository`                    | image repository of the init container                    | ibmcom/mcm-kui-init
+`extensions.image.tag`                           | image tag of the init container                           | 3.5.0
+`extensions.image.pullPolicy`                    | image pull policy of the init container                   | IfNotPresent
+`extensions.resources.limits.cpu`                | init container cpu limits                                 | 500m
+`extensions.resources.limits.memory`             | init container memory limits                              | 512Mi
+`extensions.resources.requests.cpu`              | init container cpu requests                               | 250m
+`extensions.resources.requests.memory`           | init container memory requests                            | 128Mi
 `proxy.clusterIP`                                | cluster IP                                                | icp-management-ingress
 `proxy.clusterPort`                              | cluster port                                              | 8443                  
 `proxy.name`                                     | name of the proxy container                               | kui-proxy                   
