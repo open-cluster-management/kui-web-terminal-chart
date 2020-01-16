@@ -55,6 +55,25 @@ spec:
     {{- end }}
       automountServiceAccountToken: false
       terminationGracePeriodSeconds: 60
+      {{- if .Values.enableExtensions }}
+      initContainers:
+      - name: {{ .Values.extensions.name }}
+        image: "{{ .Values.extensions.image.repository }}:{{ .Values.extensions.image.tag }}"
+        imagePullPolicy: {{ .Values.extensions.image.pullPolicy }}
+        volumeMounts:
+        - name: extension-dir 
+          mountPath: {{ .Values.extensions.downloadPath }}
+        - name: initcontainer-token
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          readOnly: true
+        env:         
+        - name: DOWNLOAD_PATH
+          value: {{ .Values.extensions.downloadPath }}
+        - name: CLI_FOLDER
+          value: "clis"
+        - name: KUI_PLUGIN_FOLDER
+          value: "kui"
+        {{- end }}
       containers:
       - name: {{ .Values.proxy.name }}
         image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag }}"
@@ -78,9 +97,23 @@ spec:
           value: "https://{{ .Values.proxy.clusterIP }}:{{ .Values.proxy.clusterPort }}"
         - name: KUI_INGRESS_PATH
           value: "{{ .Values.proxy.ingressPath }}"
+        {{- if .Values.enableExtensions }}
+        - name: ENABLE_EXTENSIONS
+          value: "true"
+        - name: DOWNLOAD_PATH
+          value: {{ .Values.extensions.downloadPath}}
+        - name: CLI_FOLDER
+          value: "clis"
+        - name: KUI_PLUGIN_FOLDER
+          value: "kui"
+        {{- end}}
         volumeMounts:
         - name: "{{ .Values.volumeMounts.kuiCertsName }}"
           mountPath: "{{ .Values.volumeMounts.kuiCertsMountPath }}"
+        {{- if .Values.enableExtensions }}
+        - name: extension-dir 
+          mountPath: {{ .Values.extensions.downloadPath }}
+        {{- end}}
         resources:
 {{ toYaml .Values.proxy.resources | indent 10 }}
     {{- if .Values.tolerations }}
@@ -88,6 +121,13 @@ spec:
 {{ toYaml .Values.tolerations | indent 6 }}
     {{- end }}
       volumes:
+      {{- if .Values.enableExtensions }}
+      - name: initcontainer-token
+        secret:
+          secretName: {{ .Values.serviceAccount.serviceAccountSecret }} 
+      - name: extension-dir
+        emptyDir: {}
+      {{- end }}
       - name: "{{ .Values.volumes.kuiCertsName }}"
         secret:
           secretName: "{{ .Values.volumes.kuiCertsSecretName }}"

@@ -10,6 +10,20 @@ nodeSelector:
   master: 'true'
 
 arch: ""
+serviceAccount:
+  roleName: kui-initcontainer
+  serviceAccountName: kui-initcontainer
+  roleBindingName: kui-initcontainer
+  serviceAccountSecret: kui-initcontainer-secret
+
+enableExtensions: true
+extensions:
+  downloadPath: /Downloads
+  name: mcm-kui-init
+  image:
+    repository: ibmcom/mcm-kui-init
+    tag: 3.5.0
+    pullPolicy: IfNotPresent
 
 proxy:
   clusterIP: icp-management-ingress

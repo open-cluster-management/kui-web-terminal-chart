@@ -11,6 +11,7 @@ This chart deploys a single instance of the Visual Web Terminal pod on the maste
 * Kuberenetes 1.11.0 or later, with beta APIs enabled
 * IBM core services including `auth-idp` service and `management-ingress`
 * ClusterAdministrator role for installation
+* KUIExtension CRD is installed
 
 ### PodSecurityPolicy Requirements
 The predefined PodSecurityPolicy name: [`ibm-anyuid-psp`](https://ibm.biz/cpkspec-psp) has been verified for this chart, if your target namespace is bound to this PodSecurityPolicy you can proceed to install the chart.
