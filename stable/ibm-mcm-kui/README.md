@@ -59,12 +59,22 @@ Parameter                                        | Description                  
 `name`                                           | name of app                                               | mcm-kui                   
 `replicaCount`                                   | number of pod replications                                | 1         
 `nodeSelector`                                   | node selector                                             | master: 'true'                             
+`enableExtensions`                               | Support extensions                                        | true                             
+`serviceAccount.roleName`                        | Role name for getting extension CRs                       | true                             
+`serviceAccount.roleBindingName`                 | Role binding name                                         | true                             
+`serviceAccount.serviceAccountName`              | Service account name for getting extension CRs            | true                             
+`serviceAccount.serviceAccountSecret`            | Secret name to mount service account token                | true                             
+`extensions.downloadPath`                        | Folder path for sharing extensions between containers     | true                             
+`extensions.name`                                | Container name of the init container                      | true                             
+`extensions.image.repository`                    | image repository of the init container                   | ibmcom/mcm-kui-init
+`extensions.image.tag`                           | image tag of the init container                          | 3.5.0
+`extensions.image.pullPolicy`                    | image pull policy of the init container                  | IfNotPresent
 `proxy.clusterIP`                                | cluster IP                                                | icp-management-ingress
 `proxy.clusterPort`                              | cluster port                                              | 8443                  
 `proxy.name`                                     | name of the proxy container                               | kui-proxy                   
 `proxy.ingressPath`                              | path of the proxy ingress                                 | kui
 `proxy.service.port`                             | port of the proxy service                                 | 8081                  
-`proxy.image.repository`                         | image repository of the proxy container                   | ibmcom/kui-proxy
+`proxy.image.repository`                         | image repository of the proxy container                   | ibmcom/mcm-kui-proxy
 `proxy.image.tag`                                | image tag of the proxy container                          | 3.5.0
 `proxy.image.pullPolicy`                         | image pull policy of the proxy container                  | IfNotPresent
 `proxy.resources.limits.cpu`                     | kui-proxy cpu limits                                      | 500m

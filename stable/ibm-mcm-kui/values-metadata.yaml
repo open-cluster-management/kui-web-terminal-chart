@@ -54,6 +54,107 @@ arch:
       - label: "s390x"
         value: "s390x"
 
+enableExtensions:
+  __metadata:
+    name: "enableExtensions"
+    label: "Enable extensions"
+    description: "Enable extensions. If set to true, an init container will be deployed for downloading extensions"
+    type: "boolean"
+    immutable: false
+    required: false 
+serviceAccount:
+  __metadata:
+    label: "Service Account"
+    description: "Service account for downloading extensions"
+    hidden: true 
+  roleName:
+    __metadata:
+      name: "serviceAccount.roleName"
+      label: "Role Name"
+      description: "Role name"
+      type: "string"
+      required: true
+      immutable: false
+  serviceAccountName:
+    __metadata:
+      name: "serviceAccount.serviceAccountName"
+      label: "Service Account Name"
+      description: "Service account name"
+      type: "string"
+      required: true
+      immutable: false
+  roleBindingName:
+    __metadata:
+      name: "serviceAccount.roleBindingName"
+      label: "Role Binding Name"
+      description: "Role binding name"
+      type: "string"
+      required: true
+      immutable: false
+  serviceAccountSecret:
+    __metadata:
+      name: "serviceAccount.serviceAccountSecret"
+      label: "Service Account Secret"
+      description: "Secret for service account token"
+      type: "string"
+      required: true
+      immutable: false  
+
+
+extensions:
+  __metadata:
+    label: "Visual Web Terminal init container component"
+    description: "Init contaienr that downloads extensions"
+    hidden: true
+  downloadPath:
+    __metadata:
+      name: "extensions.downloadPath"
+      label: "Download path"
+      description: "Folder path for sharing extensions between containers"
+      type: "string"
+      required: true
+      immutable: false
+  name:
+    __metadata:
+      name: "extensions.name"
+      label: "Container name"
+      description: "Name of the init container"
+      type: "string"
+      required: true
+      immutable: false
+
+  image:
+    repository:
+      __metadata:
+        name: "extensions.image.repository"
+        label: "Repository"
+        description: "Docker image location"
+        type: "string"
+        immutable: true
+        required: true
+    tag:
+      __metadata:
+        name: "extensions.image.tag"
+        label: "Tag"
+        description: "Docker image tag"
+        type: "string"
+        immutable: true
+        required: true
+    pullPolicy:
+      __metadata:
+        name: "extensions.image.pullPolicy"
+        label: "Image pull policy"
+        description: "Docker image pull policy"
+        type: "string"
+        immutable: true
+        required: true
+        options:
+        - label: "Always"
+          value: "Always"
+        - label: "Never"
+          value: "Never"
+        - label: "IfNotPresent"
+          value: "IfNotPresent"
 proxy:
   __metadata:
     label: "Visual Web Terminal core component"
