@@ -58,6 +58,10 @@ spec:
       {{- if .Values.enableExtensions }}
       initContainers:
       - name: {{ .Values.extensions.name }}
+        securityContext:
+          capabilities:
+            drop:
+            - ALL        
         image: "{{ .Values.extensions.image.repository }}:{{ .Values.extensions.image.tag }}"
         imagePullPolicy: {{ .Values.extensions.image.pullPolicy }}
         resources:
