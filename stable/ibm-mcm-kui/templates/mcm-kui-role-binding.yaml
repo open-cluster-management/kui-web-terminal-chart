@@ -2,6 +2,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ .Values.serviceAccount.roleBindingName }}
+  labels:
+    app: "{{ .Values.name }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
 subjects:
 - kind: ServiceAccount
   name: {{ .Values.serviceAccount.serviceAccountName }}

@@ -3,6 +3,11 @@ kind: Role
 metadata:
   creationTimestamp: null
   name: {{ .Values.serviceAccount.roleName }}
+  labels:
+    app: "{{ .Values.name }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
 rules:
 - apiGroups:
   - kui.icp.ibm.com
