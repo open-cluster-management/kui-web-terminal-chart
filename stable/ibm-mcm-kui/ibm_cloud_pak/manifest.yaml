@@ -1,13 +1,13 @@
 charts:
-  - archive: file:ibm-mcm-kui-3.4.1.tgz
+  - archive: file:ibm-mcm-kui-3.4.2.tgz
     repository-keys:
       - image.repository
 
 images:
-- image: mcm-kui-proxy:3.4.1
+- image: mcm-kui-proxy:3.4.2
   references:
-  - repository : mcm-kui-proxy-amd64:3.4.1
-    pull-repository:  hyc-cloud-private-stable-docker-local.artifactory.swg-devops.com/ibmcom-amd64/mcm-kui-proxy:3.4.1
+  - repository : mcm-kui-proxy-amd64:3.4.2
+    pull-repository:  hyc-cloud-private-stable-docker-local.artifactory.swg-devops.com/ibmcom-amd64/mcm-kui-proxy:3.4.2
     pull-authorization: 
       username: 
         env: ARTIFACTORY_USERNAME 
@@ -16,8 +16,8 @@ images:
       platform: 
         os: linux 
         architecture: amd64
-  - repository : mcm-kui-proxy-ppc64le:3.4.1
-    pull-repository:  hyc-cloud-private-stable-docker-local.artifactory.swg-devops.com/ibmcom-ppc64le/mcm-kui-proxy:3.4.1
+  - repository : mcm-kui-proxy-ppc64le:3.4.2
+    pull-repository:  hyc-cloud-private-stable-docker-local.artifactory.swg-devops.com/ibmcom-ppc64le/mcm-kui-proxy:3.4.2
     pull-authorization: 
       username: 
         env: ARTIFACTORY_USERNAME 
@@ -26,8 +26,8 @@ images:
       platform: 
         os: linux 
         architecture: ppc64le
-  - repository : mcm-kui-proxy-s390x:3.4.1
-    pull-repository:  hyc-cloud-private-stable-docker-local.artifactory.swg-devops.com/ibmcom-s390x/mcm-kui-proxy:3.4.1
+  - repository : mcm-kui-proxy-s390x:3.4.2
+    pull-repository:  hyc-cloud-private-stable-docker-local.artifactory.swg-devops.com/ibmcom-s390x/mcm-kui-proxy:3.4.2
     pull-authorization: 
       username: 
         env: ARTIFACTORY_USERNAME 
