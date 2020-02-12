@@ -4,7 +4,7 @@
 # US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 ###############################################################################
 
-name: mcm-kui
+name: kui-web-terminal
 replicaCount: 1
 nodeSelector:
   master: 'true'
@@ -19,7 +19,7 @@ proxy:
   service:
     port: 8081
   image:
-    repository: ibmcom/mcm-kui-proxy
+    repository: open-cluster-management/kui-web-terminal
     tag: 3.5.0
     pullPolicy: IfNotPresent
   resources:
