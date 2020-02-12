@@ -26,11 +26,11 @@ The predefined SecurityContextConstraints name: [`ibm-anyuid-scc`](https://ibm.b
 _NOTE: Visual Web Terminal is intended to be installed by the Installer for internal chart management, not by a user_
 
 Only one instance of the Visual Web Terminal should be installed on a cluster.
-To install the chart with release name `mcm-kui`:
+To install the chart with release name `kui-web-terminal`:
 ```bash
-$ helm install {chartname.tgz} -f {my-values.yaml} --name mcm-kui --namespace kube-system --tls
+$ helm install {chartname.tgz} -f {my-values.yaml} --name kui-web-terminal --namespace kube-system --tls
 ```
-- Replace `{chartname.tgz}` with the packaged ibm-mcm-kui chart
+- Replace `{chartname.tgz}` with the packaged kui-web-terminal chart
 - replace `{my-values.yaml}` with the path to a YAML file that specifies the values that are to be used with the install command
 
 ## Uninstalling the Chart
@@ -38,7 +38,7 @@ $ helm install {chartname.tgz} -f {my-values.yaml} --name mcm-kui --namespace ku
 To uninstall/delete the deployment:
 
 ```console
-$ helm delete mcm-kui --purge --tls
+$ helm delete kui-web-terminal --purge --tls
 ```
 
 ## Prerequisites
@@ -55,7 +55,7 @@ The following table lists the configurable parameters of the chart and their def
 
 Parameter                                        | Description                                               | Default
 ------------------------------------------------ | --------------------------------------------------------- | --------------------
-`name`                                           | name of app                                               | mcm-kui                   
+`name`                                           | name of app                                               | kui-web-terminal                   
 `replicaCount`                                   | number of pod replications                                | 1         
 `nodeSelector`                                   | node selector                                             | master: 'true'                             
 `proxy.clusterIP`                                | cluster IP                                                | icp-management-ingress
