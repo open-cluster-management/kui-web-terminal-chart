@@ -19,7 +19,8 @@ proxy:
   service:
     port: 8081
   image:
-    repository: quay.io/repository/open-cluster-management/kui-web-terminal
+    repository: quay.io/repository/open-cluster-management
+    name: kui-web-terminal
     tag: 3.5.0
     pullPolicy: IfNotPresent
   resources:
@@ -29,6 +30,8 @@ proxy:
     requests:
       cpu: 250m
       memory: 128Mi
+
+imageTagPostfix: ""
 
 tolerations:
   - key: "dedicated"
