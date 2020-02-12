@@ -1,2 +1,2 @@
 # mcm-kui-chart
-Helm chart for mcm-kui
+Helm chart for kui-web-terminal

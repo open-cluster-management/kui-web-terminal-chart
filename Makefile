@@ -23,7 +23,7 @@ endif
 
 
 CHART_VERSION := $(SEMVERSION)
-CHART_NAME ?= ibm-mcm-kui
+CHART_NAME ?= kui-web-terminal
 
 default: build
 

@@ -6,7 +6,7 @@
 
 apiVersion: v1
 description: A helm chart for deploying the IBM Visual Web Terminal
-name: ibm-mcm-kui
+name: kui-web-terminal
 appVersion: "1.0"
 version: 3.5.0
 tillerVersion: ">=2.12.3"

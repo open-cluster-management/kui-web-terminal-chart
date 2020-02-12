@@ -57,7 +57,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
       - name: {{ .Values.proxy.name }}
-        image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag }}"
+        image: "{{ .Values.proxy.image.repository }}/{{ .Values.proxy.image.name }}:{{ .Values.proxy.image.tag }}{{ .Values.imageTagPostfix }}"
         imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
         securityContext:
           allowPrivilegeEscalation: false

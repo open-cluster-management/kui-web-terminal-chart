@@ -110,6 +110,14 @@ proxy:
         type: "string"
         immutable: true
         required: true
+    name:
+      __metadata:
+        name: "proxy.image.name"
+        label: "Name"
+        description: "Docker image name"
+        type: "string"
+        immutable: true
+        required: true
     tag:
       __metadata:
         name: "proxy.image.tag"
@@ -169,6 +177,13 @@ proxy:
           type: "string"
           immutable: false
           required: false
+
+imageTagPostfix:
+  __metadata:
+    name: "imageTagPostfix"
+    label: "Image Tag Postfix"
+    description: "Special value for CI/CD build requirements"
+    hidden: true
 
 tolerations:
   __metadata:
