@@ -56,6 +56,46 @@ spec:
       automountServiceAccountToken: false
       terminationGracePeriodSeconds: 60
       containers:
+      {{- if and .Values.useOpenshiftSettings .Values.OpenshiftSettings.oauth.useProxy}}
+      - name: oauth-proxy
+        args:
+        - --https-address=:{{ .Values.OpenshiftSettings.oauth.proxyPort }}
+        - --client-id={{ .Values.OpenshiftSettings.oauth.clientName }}
+        - --client-secret={{ .Values.OpenshiftSettings.oauth.clientSecret }}
+        - --pass-access-token=true
+        - --provider=openshift
+        - --tls-cert=/etc/tls/private/tls.crt
+        - --tls-key=/etc/tls/private/tls.key
+        - --cookie-secret=^{{randAlphaNum 15}}
+        - --scope=user:full
+        - --upstream=https://localhost:3000
+        - --upstream-ca={{ .Values.volumeMounts.kuiCertsMountPath }}/ca.crt
+        image: openshift/oauth-proxy:latest
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          capabilities:
+            drop:
+              - all
+          runAsUser: 3000
+        ports:
+        - containerPort: {{.Values.OpenshiftSettings.oauth.proxyPort }} 
+          name: public
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: "{{ .Values.volumeMounts.kuiCertsMountPath }}" 
+          name: "{{ .Values.volumeMounts.kuiCertsName }}"
+        - mountPath: /etc/tls/private
+          name: oauth-proxy-tls
+        {{- if .Values.OpenshiftSettings.oauth.mountServiceAccount }}
+        - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          readOnly: true
+          name: oauth-service-account
+        {{- end }}
+
+      {{- end}}
       - name: {{ .Values.proxy.name }}
         image: "{{ .Values.proxy.image.repository }}/{{ .Values.proxy.image.name }}:{{ .Values.proxy.image.tag }}{{ .Values.imageTagPostfix }}"
         imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
@@ -74,6 +114,14 @@ spec:
             port: 3000
             scheme: HTTPS
         env:
+        - name: USE_CLOUDPAK_SETTINGS
+          value: {{- if .Values.useOpenshiftSettings}} "false" {{- else}} "true" {{- end}}
+        {{- if .Values.useOpenshiftSettings }}
+        - name: TOKEN_FROM_COOKIE
+          value: {{- if .Values.OpenshiftSettings.oauth.tokenFromCookie }} "true" {{- else }} "false" {{- end}}
+        - name: ACCESS_TOKEN_KEY
+          value: {{ .Values.OpenshiftSettings.oauth.tokenKey }}
+        {{- end}}
         - name: ICP_EXTERNAL_URL
           value: "https://{{ .Values.proxy.clusterIP }}:{{ .Values.proxy.clusterPort }}"
         - name: KUI_INGRESS_PATH
@@ -81,6 +129,11 @@ spec:
         volumeMounts:
         - name: "{{ .Values.volumeMounts.kuiCertsName }}"
           mountPath: "{{ .Values.volumeMounts.kuiCertsMountPath }}"
+        {{- if and .Values.useOpenshiftSettings (and (not .Values.OpenshiftSettings.oauth.useProxy) .Values.OpenshiftSettings.oauth.mountServiceAccount) }}
+        - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          readOnly: true
+          name: oauth-service-account
+        {{- end }}
         resources:
 {{ toYaml .Values.proxy.resources | indent 10 }}
     {{- if .Values.tolerations }}
@@ -91,3 +144,14 @@ spec:
       - name: "{{ .Values.volumes.kuiCertsName }}"
         secret:
           secretName: "{{ .Values.volumes.kuiCertsSecretName }}"
+      {{- if and .Values.useOpenshiftSettings .Values.OpenshiftSettings.oauth.mountServiceAccount }}
+      - name: oauth-service-account
+        secret:
+          secretName: {{ .Values.OpenshiftSettings.oauth.serviceAccountSecret }}
+      {{- end}}
+      {{- if and .Values.useOpenshiftSettings .Values.OpenshiftSettings.oauth.useProxy }}
+      - name: oauth-proxy-tls
+        secret:
+          secretName: {{ .Values.OpenshiftSettings.oauth.proxyTlsSecretName }}
+      {{- end}}
+      

@@ -3,7 +3,7 @@
 # (C) Copyright IBM Corporation 2019 All Rights Reserved
 # US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 ###############################################################################
-
+{{- if or  (not .Values.useOpenshiftSettings) (not .Values.OpenshiftSettings.network.useRoute) }}
 apiVersion: extensions/v1beta1
 kind: Ingress
 
@@ -15,6 +15,7 @@ metadata:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
   annotations:
+    {{- if not .Values.useOpenshiftSettings }}
     kubernetes.io/ingress.class: "ibm-icp-management"
     icp.management.ibm.com/auth-type: "access-token"
     icp.management.ibm.com/secure-backends: "true"
@@ -26,6 +27,7 @@ metadata:
             add_header X-Frame-Options "SAMEORIGIN";
             add_header X-Content-Type-Options nosniff;
             add_header X-XSS-Protection "1; mode=block";
+    {{- end }}
 spec:
   rules:
   - http:
@@ -34,3 +36,4 @@ spec:
         backend:
           serviceName: {{ .Values.proxy.name }}
           servicePort: {{ .Values.proxy.service.port }}
+{{- end }}

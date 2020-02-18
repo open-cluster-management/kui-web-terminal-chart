@@ -3,7 +3,6 @@
 # (C) Copyright IBM Corporation 2019 All Rights Reserved
 # US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
 ###############################################################################
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -14,15 +13,24 @@ metadata:
     component: {{ .Values.name }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
+  {{- if and .Values.useOpenshiftSettings .Values.OpenshiftSettings.oauth.useProxy }} 
+  annotations:
+    service.alpha.openshift.io/serving-cert-secret-name: {{ .Values.OpenshiftSettings.oauth.proxyTlsSecretName }} 
+  {{- end }}
 spec:
   type: ClusterIP
   ports:
-    - port: {{ .Values.proxy.service.port }}
+    - protocol: TCP
+      {{- if and .Values.useOpenshiftSettings .Values.OpenshiftSettings.oauth.useProxy }}
+      targetPort: {{.Values.OpenshiftSettings.oauth.proxyPort }}
+      port: 443
+      {{- else }}
       targetPort: 3000
-      protocol: TCP
+      port: {{ .Values.proxy.service.port }}
+      {{- end }}
+      
   selector:
     app: "{{ .Values.name }}"
     release: {{ .Release.Name }}
-
 
 

@@ -11,6 +11,23 @@ nodeSelector:
 
 arch: ""
 
+useOpenshiftSettings: true
+OpenshiftSettings:
+  clusterURI: han-ocp.os.fyre.ibm.com
+  network:
+    useRoute: true
+    routeName: kui
+  oauth:
+    mountServiceAccount: true
+    serviceAccountSecret: kui-service-account-secret
+    useProxy: true
+    proxyTlsSecretName: kui-oauth-tls
+    proxyPort: 8443
+    tokenKey: X-Forwarded-Access-Token
+    tokenFromCookie: false
+    clientName: kui-oauth-client
+    clientSecret: kui-oauth-client-secret
+
 proxy:
   clusterIP: icp-management-ingress
   clusterPort: 8443
@@ -19,7 +36,7 @@ proxy:
   service:
     port: 8081
   image:
-    repository: quay.io/repository/open-cluster-management
+    repository: quay.io/open-cluster-management
     name: kui-web-terminal
     tag: 3.5.0
     pullPolicy: IfNotPresent

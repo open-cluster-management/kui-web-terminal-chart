@@ -1,0 +1,22 @@
+###############################################################################
+# Licensed Materials - Property of IBM
+# (C) Copyright IBM Corporation 2020 All Rights Reserved
+# US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+###############################################################################
+{{- if .Values.useOpenshiftSettings }}
+apiVersion: oauth.openshift.io/v1
+kind: OAuthClient
+metadata:
+  name: {{ .Values.OpenshiftSettings.oauth.clientName }}
+  labels:
+    app: "{{ .Values.name }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    component: {{ .Values.name }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+grantMethod: auto
+redirectURIs:
+- https://{{.Values.OpenshiftSettings.network.routeName}}-{{ .Release.Namespace }}.apps.{{ .Values.OpenshiftSettings.clusterURI }}:443/oauth/callback
+- https://{{.Values.OpenshiftSettings.network.routeName}}-{{ .Release.Namespace }}.apps.{{ .Values.OpenshiftSettings.clusterURI }}/oauth/callback
+secret: {{ .Values.OpenshiftSettings.oauth.clientSecret }}
+{{- end}}
