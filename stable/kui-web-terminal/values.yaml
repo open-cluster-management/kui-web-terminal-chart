@@ -6,12 +6,15 @@
 
 name: kui-web-terminal
 replicaCount: 1
-nodeSelector:
-  master: 'true'
 
 arch: ""
 
 proxy:
+  env:
+    useOpenshiftSettings: true
+    tokenFromCookie: true
+    accessTokenKey: acm-access-token-cookie
+    headerURL: http://console-header:3000
   clusterIP: icp-management-ingress
   clusterPort: 8443
   name: kui-proxy
