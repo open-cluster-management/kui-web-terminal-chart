@@ -79,9 +79,9 @@ spec:
         - name: KUI_INGRESS_PATH
           value: "{{ .Values.proxy.ingressPath }}"
         - name: USE_CLOUDPAK_SETTINGS
-          value: {{-if .Values.proxy.env.useOpenshiftSettings }}"false"{{-else}}"true"{{-end}}
+          value: {{if .Values.proxy.env.useOpenshiftSettings }}"false"{{else}}"true"{{end}}
         - name: TOKEN_FROM_COOKIE
-          value: {{-if .Values.proxy.env.tokenFromCookie }}"true"{{-else}}"false"{{-end}}
+          value: {{if .Values.proxy.env.tokenFromCookie }}"true"{{else}}"false"{{end}}
         - name: ACCESS_TOKEN_KEY
           value: {{ .Values.proxy.env.accessTokenKey }}
         - name: HEADER_SERVICE
