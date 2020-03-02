@@ -36,6 +36,10 @@ spec:
       hostNetwork: false
       hostPID: false
       hostIPC: false
+      {{- if .Values.pullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.pullSecret }}
+      {{- end }}
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

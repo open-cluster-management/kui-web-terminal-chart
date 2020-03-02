@@ -22,21 +22,23 @@ before_install:
   - make init
   # Clone build tools & set tools path for follow on processing
   # The clone command will use the ssh key from the travis settings to clone the repo from github.ibm.com
-  - if [[ ! -z "$BRANCH_OVERRIDE" ]] ; then
-      git clone -b $BRANCH_OVERRIDE https://${GITHUB_USER_ESCAPE}:${GITHUB_TOKEN}@github.ibm.com/IBMPrivateCloud/content-tools.git;
-    else 
-      git clone https://${GITHUB_USER_ESCAPE}:${GITHUB_TOKEN}@github.ibm.com/IBMPrivateCloud/content-tools.git;
-    fi
+  # Comment out now as we cannot pull from these content-tools...may need new linter on Red Hat side
+  # - if [[ ! -z "$BRANCH_OVERRIDE" ]] ; then
+  #     git clone -b $BRANCH_OVERRIDE https://${GITHUB_USER_ESCAPE}:${GITHUB_TOKEN}@github.ibm.com/IBMPrivateCloud/content-tools.git;
+  #   else 
+  #     git clone https://${GITHUB_USER_ESCAPE}:${GITHUB_TOKEN}@github.ibm.com/IBMPrivateCloud/content-tools.git;
+  #   fi
   - export toolsPath=`pwd`/content-tools/travis-tools/
   # Install dependencies & determine chart delta 
-  - $toolsPath/build/bin/installDependencies.sh | true
-  - export changeList=`$toolsPath/build/bin/determineChartDelta.sh | tee determineChartDelta.out | grep 'return determineChartDelta:' | cut -f2 -d:` && cat determineChartDelta.out
+  # see above, can't pull content-tools now
+  # - $toolsPath/build/bin/installDependencies.sh | true
+  # - export changeList=`$toolsPath/build/bin/determineChartDelta.sh | tee determineChartDelta.out | grep 'return determineChartDelta:' | cut -f2 -d:` && cat determineChartDelta.out
    
 install:
   # Package for release 
-  - if [[ ! -z "$TRAVIS_TAG" ]] ; then $toolsPath/release/bin/package.sh; fi
+  # - if [[ ! -z "$TRAVIS_TAG" ]] ; then $toolsPath/release/bin/package.sh; fi
   # Lint and install/test charts (if cv-tests exist)
-  - $toolsPath/cv-test/bin/validateContent.sh | true
+  # - $toolsPath/cv-test/bin/validateContent.sh | true
 
 before_script:
   - make tool
@@ -46,9 +48,9 @@ jobs:
   include:
     - stage: "lint"
       name: "Lint"
-      script: 
-        - make lint
-        - make cv-lint
+#       script: 
+#         - make lint
+#         - make cv-lint
 
     - stage: test-deploy
       name: "Deploy to Scratch"
