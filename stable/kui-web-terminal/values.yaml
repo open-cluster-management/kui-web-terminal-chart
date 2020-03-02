@@ -7,6 +7,9 @@
 name: kui-web-terminal
 replicaCount: 1
 
+global:
+  pullSecret: null
+
 arch: ""
 
 proxy:
