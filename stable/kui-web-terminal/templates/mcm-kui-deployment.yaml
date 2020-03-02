@@ -55,6 +55,10 @@ spec:
     {{- end }}
       automountServiceAccountToken: false
       terminationGracePeriodSeconds: 60
+      {{- if .Values.global.pullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.global.pullSecret }}
+      {{- end }}
       containers:
       - name: {{ .Values.proxy.name }}
         image: "{{ .Values.proxy.image.repository }}/{{ .Values.proxy.image.name }}:{{ .Values.proxy.image.tag }}{{ .Values.imageTagPostfix }}"
