@@ -23,7 +23,7 @@ proxy:
   service:
     port: 8081
   image:
-    repository: quay.io/repository/open-cluster-management
+    repository: quay.io/open-cluster-management
     name: kui-web-terminal
     tag: 3.5.0
     pullPolicy: IfNotPresent
