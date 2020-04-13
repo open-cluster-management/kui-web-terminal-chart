@@ -1,1 +1,1 @@
-You have successfully installed ibm-mcm-kui {{ .Chart.Version }}
+You have successfully installed kui-web-terminal {{ .Chart.Version }}

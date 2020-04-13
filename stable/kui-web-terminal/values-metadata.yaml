@@ -178,6 +178,19 @@ proxy:
           immutable: false
           required: false
 
+imageShaDigests:
+  __metadata:
+  name: "imageShaDigests"
+  label: "Image SHA Digests"
+  description: "Special value for CI/CD build requirements"
+  hidden: true
+  kui_web_terminal:
+    __metadata:
+      name: "kui_web_terminal"
+      label: "kui_web_terminal"
+      description: "Reference to proxy.image.name without dashes"
+      hidden: true
+
 imageTagPostfix:
   __metadata:
     name: "imageTagPostfix"
