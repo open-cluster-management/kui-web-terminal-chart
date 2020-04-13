@@ -35,6 +35,9 @@ proxy:
       cpu: 250m
       memory: 128Mi
 
+imageShaDigests:
+  kui_web_terminal: ""
+  
 imageTagPostfix: ""
 
 tolerations:
