@@ -16,9 +16,9 @@ metadata:
     release: {{ .Release.Name }}
   annotations:
     kubernetes.io/ingress.class: "ibm-icp-management"
-    icp.management.ibm.com/auth-type: "access-token"
-    icp.management.ibm.com/secure-backends: "true"
-    icp.management.ibm.com/configuration-snippet: |
+    ingress.open-cluster-management.io/auth-type: "access-token"
+    ingress.open-cluster-management.io/secure-backends: "true"
+    ingress.open-cluster-management.io/configuration-snippet: |
       add_header Cache-Control "no-cache, no-store, must-revalidate";
             add_header Content-Security-Policy "frame-ancestors 'none'";
             add_header Pragma no-cache;
