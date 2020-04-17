@@ -15,7 +15,7 @@ metadata:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
   annotations:
-    kubernetes.io/ingress.class: "ibm-icp-management"
+    kubernetes.io/ingress.class: "ingress.open-cluster-management"
     ingress.open-cluster-management.io/auth-type: "access-token"
     ingress.open-cluster-management.io/secure-backends: "true"
     ingress.open-cluster-management.io/configuration-snippet: |
