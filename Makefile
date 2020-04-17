@@ -1,10 +1,5 @@
-ARTIFACTORY_HELM_REPO ?= hyc-cloud-private-integration-helm-local
-TEST_ARTIFACTORY_HELM_REPO ?= hyc-cloud-private-scratch-helm-local/mcm-kui-pr-builds
-
 GITHUB_USER := $(shell echo $(GITHUB_USER) | sed 's/@/%40/g')
 
-CV_VERSION ?= 2.0.9
-CV_RUN_ARGS ?= lint helm stable/$(CHART_NAME)
 
 .PHONY: init\:
 init::
@@ -30,16 +25,11 @@ default: build
 .PHONY: tool
 ## Download helm for linting and packaging
 tool:
-	curl -fksSL https://storage.googleapis.com/kubernetes-helm/helm-v2.12.3-linux-amd64.tar.gz | sudo tar --strip-components=1 -xvz -C /usr/local/bin/ linux-amd64/helm
-
-.PHONY: setup
-## Initialize helm 
-setup:
-	helm init -c
+	curl -fksSL https://get.helm.sh/helm-v3.1.2-linux-amd64.tar.gz | sudo tar --strip-components=1 -xvz -C /usr/local/bin/ linux-amd64/helm
 
 .PHONY: lint
 ## Run lint with helm linting tool
-lint: setup
+lint: 
 	helm lint stable/$(CHART_NAME)
 
 .PHONY: cv-lint
@@ -54,24 +44,3 @@ build: setup
 	@echo "ALSO PACKAGING AS VERSION 99.99.99 UNTIL COMMON SERVICES PIPELINE COMPLETE"
 	helm package --version 99.99.99 stable/$(CHART_NAME)
 
-.PHONY: release-helm
-## Push chart archive to integration (pushes to master only)
-release-helm:
-	@echo "CHART_NAME: $(CHART_NAME)"
-	@echo "CHART_VERSION: $(CHART_VERSION)"
-	curl -f -u$(ARTIFACTORY_USERNAME):$(ARTIFACTORY_APIKEY) -T $(CHART_NAME)-$(CHART_VERSION).tgz \
-	"https://na.artifactory.swg-devops.com/artifactory/$(ARTIFACTORY_HELM_REPO)/$(CHART_NAME)-$(CHART_VERSION).tgz"
-	@echo "ALSO DELIVERING AS VERSION 99.99.99 UNTIL COMMON SERVICES PIPELINE COMPLETE"
-	curl -u$(ARTIFACTORY_USERNAME):$(ARTIFACTORY_APIKEY) -T $(CHART_NAME)-99.99.99.tgz \
-	"https://na.artifactory.swg-devops.com/artifactory/$(ARTIFACTORY_HELM_REPO)/$(CHART_NAME)-99.99.99.tgz"
-
-.PHONY: release-helm-test
-## Push chart archive to scratch
-release-helm-test:
-	@echo "CHART_NAME: $(CHART_NAME)"
-	@echo "CHART_VERSION: $(CHART_VERSION)"
-	curl -f -u$(ARTIFACTORY_USERNAME):$(ARTIFACTORY_APIKEY) -T $(CHART_NAME)-$(CHART_VERSION).tgz \
-	"https://na.artifactory.swg-devops.com/artifactory/$(TEST_ARTIFACTORY_HELM_REPO)/$(CHART_NAME)-$(CHART_VERSION).tgz"
-	@echo "ALSO DELIVERING AS VERSION 99.99.99 UNTIL COMMON SERVICES PIPELINE COMPLETE"
-	curl -u$(ARTIFACTORY_USERNAME):$(ARTIFACTORY_APIKEY) -T $(CHART_NAME)-99.99.99.tgz \
-	"https://na.artifactory.swg-devops.com/artifactory/$(TEST_ARTIFACTORY_HELM_REPO)/$(CHART_NAME)-99.99.99.tgz"
