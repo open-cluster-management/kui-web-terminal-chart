@@ -68,7 +68,7 @@ global:
       __metadata:
         name: "kui_web_terminal"
         label: "kui_web_terminal"
-        description: "Reference to proxy.image.name without dashes"
+        description: "Key to get kui image from list of image overrides"
         hidden: true
 
 proxy:

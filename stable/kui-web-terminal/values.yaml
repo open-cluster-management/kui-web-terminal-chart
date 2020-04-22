@@ -10,8 +10,9 @@ replicaCount: 1
 pullSecret: null
 arch: ""
 
-imageOverrides:
-  kui_web_terminal: ""
+global: 
+  imageOverrides:
+    kui_web_terminal: ""
 
 proxy:
   env:
