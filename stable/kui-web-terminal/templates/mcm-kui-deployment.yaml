@@ -61,11 +61,7 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
       - name: {{ .Values.proxy.name }}
-        {{- if .Values.imageShaDigests.kui_web_terminal }}
-        image: "{{ .Values.proxy.image.repository }}/{{ .Values.proxy.image.name }}@{{ .Values.imageShaDigests.kui_web_terminal }}"
-        {{- else }}
-        image: "{{ .Values.proxy.image.repository }}/{{ .Values.proxy.image.name }}:{{ .Values.proxy.image.tag }}{{ .Values.imageTagPostfix }}"
-        {{- end }}
+        image: {{ .Values.global.imageOverrides.kui_web_terminal }}
         imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
         securityContext:
           allowPrivilegeEscalation: false
