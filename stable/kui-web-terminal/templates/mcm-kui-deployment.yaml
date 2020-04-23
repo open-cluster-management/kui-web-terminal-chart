@@ -62,7 +62,7 @@ spec:
       containers:
       - name: {{ .Values.proxy.name }}
         image: {{ .Values.global.imageOverrides.kui_web_terminal }}
-        imagePullPolicy: {{ .Values.proxy.image.pullPolicy }}
+        imagePullPolicy: {{ .Values.global.pullPolicy }}
         securityContext:
           allowPrivilegeEscalation: false
           privileged: false

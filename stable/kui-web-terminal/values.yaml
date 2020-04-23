@@ -10,7 +10,8 @@ replicaCount: 1
 pullSecret: null
 arch: ""
 
-global: 
+global:
+  pullPolicy: Always
   imageOverrides:
     kui_web_terminal: ""
 
@@ -26,8 +27,6 @@ proxy:
   ingressPath: kui
   service:
     port: 8081
-  image:
-    pullPolicy: IfNotPresent
   resources:
     limits:
       cpu: 500m

@@ -63,7 +63,6 @@ Parameter                                        | Description                  
 `proxy.name`                                     | name of the proxy container                               | kui-proxy                   
 `proxy.ingressPath`                              | path of the proxy ingress                                 | kui
 `proxy.service.port`                             | port of the proxy service                                 | 8081                  
-`proxy.image.pullPolicy`                         | image pull policy of the proxy container                  | IfNotPresent
 `proxy.resources.limits.cpu`                     | kui-proxy cpu limits                                      | 500m
 `proxy.resources.limits.memory`                  | kui-proxy memory limits                                   | 512Mi
 `proxy.resources.requests.cpu`                   | kui-proxy cpu requests                                    | 250m
