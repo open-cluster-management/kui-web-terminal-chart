@@ -54,6 +54,38 @@ arch:
       - label: "s390x"
         value: "s390x"
 
+global: 
+  __metadata:
+    label: "Global values"
+    description: "Values accessible to entire chart and subcharts"
+  imageOverrides:
+    __metadata:
+    name: "imageOverrides"
+    label: "Image name overrides"
+    description: "Special value for CI/CD build requirements"
+    hidden: true
+    kui_web_terminal:
+      __metadata:
+        name: "kui_web_terminal"
+        label: "kui_web_terminal"
+        description: "Key to get kui image from list of image overrides"
+        hidden: true
+  pullPolicy:
+    __metadata:
+      name: "global.pullPolicy"
+      label: "Image pull policy"
+      description: "Docker image pull policy"
+      type: "string"
+      immutable: true
+      required: true
+      options:
+      - label: "Always"
+        value: "Always"
+      - label: "Never"
+        value: "Never"
+      - label: "IfNotPresent"
+        value: "IfNotPresent"
+
 proxy:
   __metadata:
     label: "Visual Web Terminal core component"
@@ -101,46 +133,6 @@ proxy:
         type: "number"
         immutable: false
         required: true
-  image:
-    repository:
-      __metadata:
-        name: "proxy.image.repository"
-        label: "Repository"
-        description: "Docker image location"
-        type: "string"
-        immutable: true
-        required: true
-    name:
-      __metadata:
-        name: "proxy.image.name"
-        label: "Name"
-        description: "Docker image name"
-        type: "string"
-        immutable: true
-        required: true
-    tag:
-      __metadata:
-        name: "proxy.image.tag"
-        label: "Tag"
-        description: "Docker image tag"
-        type: "string"
-        immutable: true
-        required: true
-    pullPolicy:
-      __metadata:
-        name: "proxy.image.pullPolicy"
-        label: "Image pull policy"
-        description: "Docker image pull policy"
-        type: "string"
-        immutable: true
-        required: true
-        options:
-        - label: "Always"
-          value: "Always"
-        - label: "Never"
-          value: "Never"
-        - label: "IfNotPresent"
-          value: "IfNotPresent"
 
   resources:
     limits:
@@ -177,26 +169,6 @@ proxy:
           type: "string"
           immutable: false
           required: false
-
-imageShaDigests:
-  __metadata:
-  name: "imageShaDigests"
-  label: "Image SHA Digests"
-  description: "Special value for CI/CD build requirements"
-  hidden: true
-  kui_web_terminal:
-    __metadata:
-      name: "kui_web_terminal"
-      label: "kui_web_terminal"
-      description: "Reference to proxy.image.name without dashes"
-      hidden: true
-
-imageTagPostfix:
-  __metadata:
-    name: "imageTagPostfix"
-    label: "Image Tag Postfix"
-    description: "Special value for CI/CD build requirements"
-    hidden: true
 
 tolerations:
   __metadata:

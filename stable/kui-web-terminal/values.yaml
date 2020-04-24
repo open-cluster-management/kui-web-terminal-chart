@@ -10,6 +10,11 @@ replicaCount: 1
 pullSecret: null
 arch: ""
 
+global:
+  pullPolicy: Always
+  imageOverrides:
+    kui_web_terminal: ""
+
 proxy:
   env:
     useOpenshiftSettings: true
@@ -22,11 +27,6 @@ proxy:
   ingressPath: kui
   service:
     port: 8081
-  image:
-    repository: quay.io/open-cluster-management
-    name: kui-web-terminal
-    tag: 3.5.0
-    pullPolicy: IfNotPresent
   resources:
     limits:
       cpu: 500m
@@ -34,11 +34,6 @@ proxy:
     requests:
       cpu: 250m
       memory: 128Mi
-
-imageShaDigests:
-  kui_web_terminal: ""
-  
-imageTagPostfix: ""
 
 tolerations:
   - key: "dedicated"
