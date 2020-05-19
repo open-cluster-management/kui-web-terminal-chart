@@ -27,11 +27,11 @@ jobs:
     - stage: "lint"
       name: "Lint"
       script: 
-	- make
+        - make
         - make lint
     - stage: release-ff
       name: "Push commits to current release branch"
       if: type = push AND branch =~ /^master$/
       script:
-	- make
+        - make
         - make release-ff
