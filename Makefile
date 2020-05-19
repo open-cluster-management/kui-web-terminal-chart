@@ -22,12 +22,12 @@ CHART_NAME ?= kui-web-terminal
 .PHONY: tool
 ## Download helm for linting and packaging
 tool:
-	curl -fksSL https://get.helm.sh/helm-v3.1.2-linux-amd64.tar.gz | sudo tar --strip-components=1 -xvz -C /usr/local/bin/ linux-amd64/helm
+	curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
 .PHONY: setup
 setup:
 
-.PHONY: tool
+.PHONY: lint
 ## Run lint with helm linting tool
-lint:
+lint: tool
 	helm lint stable/$(CHART_NAME)
