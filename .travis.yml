@@ -14,13 +14,20 @@ branches:
 
   # The /^ga-[0-9]+.*$/ pattern is for tag testing only, so it can be removed when no one needs to test tagging against commits.
 
-before_install:
-  - make init
-  - make tool
+stages:
+  - lint
+  - release-ff
 
 jobs:  
   include:
     - stage: "lint"
       name: "Lint"
       script: 
+        - make
         - make lint
+    - stage: release-ff
+      name: "Push commits to current release branch"
+      if: type = push AND branch =~ /^master$/
+      script:
+        - make
+        - make release-ff
