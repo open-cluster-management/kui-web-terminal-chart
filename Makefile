@@ -24,7 +24,10 @@ CHART_NAME ?= kui-web-terminal
 tool:
 	curl -fksSL https://get.helm.sh/helm-v3.1.2-linux-amd64.tar.gz | sudo tar --strip-components=1 -xvz -C /usr/local/bin/ linux-amd64/helm
 
+.PHONY: setup
+setup:
+
 .PHONY: tool
 ## Run lint with helm linting tool
-lint: setup
+lint:
 	helm lint stable/$(CHART_NAME)
