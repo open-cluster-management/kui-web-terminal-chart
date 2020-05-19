@@ -1,4 +1,4 @@
-.build-harness
+.build-harness-bootstrap
 build-harness
 .DS_Store
 *.tgz
