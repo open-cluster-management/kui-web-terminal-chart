@@ -2,16 +2,12 @@
 # Copyright (c) 2020 Red Hat, Inc.
 ###############################################################################
 GITHUB_USER := $(shell echo $(GITHUB_USER) | sed 's/@/%40/g')
+GITHUB_TOKEN ?=
 
-
-.PHONY: init\:
-init::
-	@mkdir -p variables
 ifndef GITHUB_USER
 	$(info GITHUB_USER not defined)
 	exit -1
 endif
-	$(info Using GITHUB_USER=$(GITHUB_USER))
 ifndef GITHUB_TOKEN
 	$(info GITHUB_TOKEN not defined)
 	exit -1
@@ -22,8 +18,6 @@ endif
 
 CHART_VERSION := $(SEMVERSION)
 CHART_NAME ?= kui-web-terminal
-
-default: build
 
 .PHONY: tool
 ## Download helm for linting and packaging
