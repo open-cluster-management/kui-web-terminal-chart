@@ -34,7 +34,6 @@ spec:
         k8s-app: "{{ .Values.proxy.name }}"
         component: {{ .Values.name }}
         release: {{ .Release.Name }}
-      annotations:
     spec:
       hostNetwork: false
       hostPID: false
