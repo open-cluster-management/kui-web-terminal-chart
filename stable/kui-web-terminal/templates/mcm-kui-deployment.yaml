@@ -34,8 +34,6 @@ spec:
         k8s-app: "{{ .Values.proxy.name }}"
         component: {{ .Values.name }}
         release: {{ .Release.Name }}
-      annotations:
-        seccomp.security.alpha.kubernetes.io/pod: docker/default
     spec:
       hostNetwork: false
       hostPID: false
@@ -44,6 +42,7 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.pullSecret }}
       {{- end }}
+      serviceAccountName: {{ .Values.proxy.name }}
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
