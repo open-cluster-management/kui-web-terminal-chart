@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2020 Red Hat, Inc. 
+# Copyright (c) 2020 Red Hat, Inc.
 #
 
 ###############################################################################
@@ -45,6 +45,31 @@ tolerations:
     effect: "NoSchedule"
   - key: "CriticalAddonsOnly"
     operator: "Exists"
+    
+hubconfig:
+  nodeSelector: null
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 70
+      podAffinityTerm:
+        topologyKey: failure-domain.beta.kubernetes.io/zone
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - kui-web-terminal
+    - weight: 35
+      podAffinityTerm:
+        topologyKey: kubernetes.io/hostname
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - kui-web-terminal
 
 volumes:
   kuiCertsName: "kui-proxy-certs"

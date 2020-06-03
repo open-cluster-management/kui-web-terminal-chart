@@ -56,10 +56,14 @@ spec:
                   {{- else }}
                   - {{ template "kui-proxy.arch" . }}
                   {{- end }}
-    {{- if .Values.nodeSelector }}
+        {{- with .Values.affinity }}
+        podAntiAffinity:
+  {{ toYaml . | indent 10 }}
+      {{- end }}
+      {{- with .Values.hubconfig.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
-    {{- end }}
+      {{ toYaml . | indent 8 }}
+      {{- end }}
       automountServiceAccountToken: false
       terminationGracePeriodSeconds: 60
       containers:
