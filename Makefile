@@ -5,7 +5,7 @@ GITHUB_USER := $(shell echo $(GITHUB_USER) | sed 's/@/%40/g')
 GITHUB_TOKEN ?=
 
 ifndef GITHUB_USER
-  $(echo info GITHUB_USER not defined)
+  $(echo GITHUB_USER not defined)
   $(info GITHUB_USER not defined)
 	exit -1
 endif
