@@ -5,12 +5,12 @@ GITHUB_USER := $(shell echo $(GITHUB_USER) | sed 's/@/%40/g')
 GITHUB_TOKEN ?=
 
 ifndef GITHUB_USER
-	$(info GITHUB_USER not defined)
-	exit -1
+  $(info GITHUB_USER not defined)
+  exit -1
 endif
 ifndef GITHUB_TOKEN
-	$(info GITHUB_TOKEN not defined)
-	exit -1
+  $(info GITHUB_TOKEN not defined)
+  exit -1
 endif
 
 # Bootstrap (pull) the build harness
