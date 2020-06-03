@@ -42,7 +42,6 @@ spec:
       imagePullSecrets:
       - name: {{ .Values.pullSecret }}
       {{- end }}
-      serviceAccountName: {{ .Values.proxy.name }}
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
