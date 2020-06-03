@@ -56,26 +56,6 @@ spec:
                   {{- else }}
                   - {{ template "kui-proxy.arch" . }}
                   {{- end }}
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 70
-            podAffinityTerm:
-              topologyKey: failure-domain.beta.kubernetes.io/zone
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ .Values.name }}
-          - weight: 35
-            podAffinityTerm:
-              topologyKey: kubernetes.io/hostname
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ .Values.name }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
