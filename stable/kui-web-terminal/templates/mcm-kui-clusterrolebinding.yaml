@@ -5,6 +5,14 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: kui-proxy
   labels:
+    app: "{{ .Values.name }}"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/name: {{ .Values.name }}
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     component: clusterrolebinding
 subjects:
 - kind: ServiceAccount
