@@ -1,20 +1,3 @@
-# Copyright (c) 2020 Red Hat, Inc.
----
-apiVersion: security.openshift.io/v1
-kind: SecurityContextConstraints
-metadata:
-  name: "{{ .Values.proxy.name }}"-scc
-  annotations:
-    labels:
-      app: "{{ .Values.name }}"
-      chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-      release: {{ .Release.Name }}
-      heritage: {{ .Release.Service }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
-      app.kubernetes.io/managed-by: {{ .Release.Service }}
-      app.kubernetes.io/name: {{ .Values.name }}
-      helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-      component: securitycontextconstraints
 allowHostDirVolumePlugin: false
 allowHostIPC: false
 allowHostNetwork: false
@@ -23,11 +6,26 @@ allowHostPorts: false
 allowPrivilegeEscalation: true
 allowPrivilegedContainer: false
 allowedCapabilities: null
+apiVersion: security.openshift.io/v1
 defaultAddCapabilities: null
 fsGroup:
   type: RunAsAny
 kind: SecurityContextConstraints
-readOnlyRootFilesystem: false
+metadata:
+  annotations:
+    labels:
+      app:"{{ .Values.name }}"
+      chart:"{{ .Chart.Name }}-{{ .Chart.Version }}"
+      release:{{ .Release.Name }}
+      heritage:{{ .Release.Service }}
+      app.kubernetes.io/instance:{{ .Release.Name }}
+      app.kubernetes.io/managed-by:{{ .Release.Service }}
+      app.kubernetes.io/name:{{ .Values.name }}
+      helm.sh/chart:"{{ .Chart.Name }}-{{ .Chart.Version }}"
+      component:securitycontextconstraints
+  generation: 1
+  name: "{{ .Values.proxy.name }}-scc"
+readOnlyRootFilesystem: false 
 requiredDropCapabilities:
 - MKNOD
 runAsUser:
@@ -36,12 +34,12 @@ seLinuxContext:
   type: MustRunAs
 supplementalGroups:
   type: RunAsAny
-users:
+users: 
 - system:serviceaccount:open-cluster-management:"{{ .Values.proxy.name }}"
-# volumes:
-# - configMap
-# - downwardAPI
-# - emptyDir
-# - persistentVolumeClaim
-# - projected
-# - secret
+volumes:
+- configMap
+- downwardAPI
+- emptyDir
+- persistentVolumeClaim
+- projected
+- secret
