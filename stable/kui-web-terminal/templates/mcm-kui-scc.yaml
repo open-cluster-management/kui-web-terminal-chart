@@ -4,7 +4,7 @@ allowHostNetwork: false
 allowHostPID: false
 allowHostPorts: false
 allowPrivilegeEscalation: true
-allowPrivilegedContainer: false
+allowPrivilegedContainer: true
 allowedCapabilities: null
 apiVersion: security.openshift.io/v1
 defaultAddCapabilities: null
@@ -35,7 +35,7 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users: 
-- system:serviceaccount:open-cluster-management:"{{ .Values.proxy.name }}"
+- system:serviceaccount:{{ .Release.Namespace }}:{{ .Values.proxy.name }}
 volumes:
 - configMap
 - downwardAPI
