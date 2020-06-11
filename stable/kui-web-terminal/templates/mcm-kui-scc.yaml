@@ -1,0 +1,45 @@
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: true
+allowedCapabilities: null
+apiVersion: security.openshift.io/v1
+defaultAddCapabilities: null
+fsGroup:
+  type: RunAsAny
+kind: SecurityContextConstraints
+metadata:
+  annotations:
+    labels:
+      app:"{{ .Values.name }}"
+      chart:"{{ .Chart.Name }}-{{ .Chart.Version }}"
+      release:{{ .Release.Name }}
+      heritage:{{ .Release.Service }}
+      app.kubernetes.io/instance:{{ .Release.Name }}
+      app.kubernetes.io/managed-by:{{ .Release.Service }}
+      app.kubernetes.io/name:{{ .Values.name }}
+      helm.sh/chart:"{{ .Chart.Name }}-{{ .Chart.Version }}"
+      component:securitycontextconstraints
+  generation: 1
+  name: "{{ .Values.proxy.name }}-scc"
+readOnlyRootFilesystem: false 
+requiredDropCapabilities:
+- MKNOD
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: MustRunAs
+supplementalGroups:
+  type: RunAsAny
+users: 
+- system:serviceaccount:{{ .Release.Namespace }}:{{ .Values.proxy.name }}
+volumes:
+- configMap
+- downwardAPI
+- emptyDir
+- persistentVolumeClaim
+- projected
+- secret
