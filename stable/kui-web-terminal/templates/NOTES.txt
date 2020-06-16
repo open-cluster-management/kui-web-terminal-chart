@@ -1,1 +1,1 @@
-You have successfully installed kui-web-terminal {{ .Chart.Version }}
+You have successfully installed Visual Web Terminal {{ .Chart.Version }}
