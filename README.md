@@ -39,6 +39,7 @@ save changes
 ```
 oc scale deployments/multiclusterhub-operator --replicas=0
 ```
+NOTE: As of June 12, 2020 on the master (2.0) build, the ability to pause the operator was added, see https://github.com/open-cluster-management/multicloudhub-operator#disabling-multiclusterhub-operator.  This means you would no longer need to perform this step or the scaling back up of relicas to 1.
 
 ### Delete kui-web-terminal-subscription
 ```
@@ -61,4 +62,4 @@ oc scale deployments/multiclusterhub-operator --replicas=1
 
 
 ## Getting the new chart picked up by an official build
-Once the changes are merged into this repo, see the information at https://github.com/open-cluster-management/multicloudhub-repo#updating-charts-in-multiclusterhubcharts 
+Once the changes are merged into this repo, see the information at https://github.com/open-cluster-management/multicloudhub-repo#updating-charts-in-multiclusterhubcharts
