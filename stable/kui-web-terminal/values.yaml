@@ -9,7 +9,6 @@
 ###############################################################################
 
 name: kui-web-terminal
-replicaCount: 1
 
 pullSecret: null
 arch: ""
@@ -48,6 +47,7 @@ tolerations:
 
 hubconfig:
   nodeSelector: null
+  replicaCount: 1
 
 affinity:
   podAntiAffinity:
