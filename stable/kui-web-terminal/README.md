@@ -5,7 +5,7 @@
 The Visual Web Terminal technology preview is an enhanced version of Web Terminal.  In addition to displaying text output from user entered commands, it can also display richer visualizations, such as interactive tables of cluster resources in response to certain commands.
 
 ## Chart Details
-This chart deploys a single instance of the Visual Web Terminal deployment as part of Red Hat Advance Cluster Management for Kubernetes (RHACM). 
+This chart deploys a single instance of the Visual Web Terminal deployment as part of Red Hat Advanced Cluster Management for Kubernetes (RHACM). 
 
 ## Prerequisites
 Please refer to RHACM hub installation requirements. 
