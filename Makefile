@@ -31,3 +31,8 @@ setup:
 ## Run lint with helm linting tool
 lint: tool
 	helm lint stable/$(CHART_NAME)
+
+.PHONY: build
+## Packages helm-api folder into chart archive
+build: setup
+	helm package stable/$(CHART_NAME)
