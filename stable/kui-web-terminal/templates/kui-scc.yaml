@@ -5,9 +5,10 @@ allowHostPID: false
 allowHostPorts: false
 allowPrivilegeEscalation: true
 allowPrivilegedContainer: true
-allowedCapabilities: null
+allowedCapabilities: []
 apiVersion: security.openshift.io/v1
-defaultAddCapabilities: null
+defaultAddCapabilities: []
+priority: 0
 fsGroup:
   type: RunAsAny
 kind: SecurityContextConstraints
