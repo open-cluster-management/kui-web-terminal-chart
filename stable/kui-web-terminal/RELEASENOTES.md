@@ -20,7 +20,8 @@ See your Red Hat Advanced Cluster Management for Kubernetes documentation.
 
 | Chart | Date | Kubernetes Required | Image(s) Supported | Breaking Changes | Details |
 | ----- | ---- | ------------ | ------------------ | ---------------- | ------- |
-| 3.6.0 | Jun 25, 2020 | >=1.11.0 |  | None |  |
+| 3.7.0 | ?? | >=1.11.0 |  | None |  |
+| 3.6.0 | Jul 23, 2020 | >=1.11.0 |  | None |  |
 | 3.5.0 | May 21, 2020 | >=1.11.0 |  | None |  |
 | 3.4.1 | Dec 12, 2019 | >=1.11.0 |  | None |  |
 | 3.4.0 | Nov 22, 2019 | >=1.11.0 |  | None |  |
