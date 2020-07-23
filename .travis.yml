@@ -3,31 +3,23 @@ sudo: required
 group: bluezone
 language: generic
 
+env:
+  global:
+    - COMPONENT_AUTO_COMMAND=${TRAVIS_BUILD_DIR}/chartAutomation.sh
+
 
 branches:
   only:
-    - master
-    - /^[0-9]+\..*$/
-    - /^v[0-9]+\..*$/
-    - /^release-[0-9]+\..*$/
-    - /^ga-[0-9]*-[0-9]*-[0-9]*/
+    - trigger-3569
 
   # The /^ga-[0-9]+.*$/ pattern is for tag testing only, so it can be removed when no one needs to test tagging against commits.
 
 stages:
-  - lint
-  - release-ff
+  - auto
 
 jobs:  
   include:
-    - stage: "lint"
-      name: "Lint"
+    - stage: auto
+      name: "Auto trigger mch-repo"
       script: 
-        - make
-        - make lint
-    - stage: release-ff
-      name: "Push commits to current release branch"
-      if: type = push AND branch =~ /^master$/
-      script:
-        - make
-        - make release-ff
+        - make component/auto
