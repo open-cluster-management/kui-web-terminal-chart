@@ -17,6 +17,7 @@ branches:
 stages:
   - lint
   - release-ff
+  - auto
 
 jobs:  
   include:
@@ -31,3 +32,10 @@ jobs:
       script:
         - make
         - make release-ff
+    - stage: auto
+      name: "Auto trigger mch-repo"
+      if: type = pull_request
+      script: 
+        - git clone --single-branch --branch dev-auto https://${MCH_REPO_BOT_TOKEN}@github.com/open-cluster-management/multicloudhub-repo.git
+        - cd multicloudhub-repo
+        - ./cicd-scripts/chartAutomation.sh kui-web-terminal
