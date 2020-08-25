@@ -12,7 +12,7 @@ apiVersion: v1
 description: A helm chart for deploying the Red Hat Visual Web Terminal
 name: kui-web-terminal
 appVersion: "1.0"
-version: 3.6.0
+version: 3.6.1
 tillerVersion: ">=2.12.3"
 kubeVersion: ">=1.11.0"
 keywords:
