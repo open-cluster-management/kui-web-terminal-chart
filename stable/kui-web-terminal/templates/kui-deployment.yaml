@@ -97,6 +97,8 @@ spec:
           value: {{ .Values.proxy.env.accessTokenKey }}
         - name: HEADER_SERVICE
           value: {{ .Values.proxy.env.headerURL }}
+        - name: OAUTH_SERVER_URL
+          value: https://oauth-openshift.{{ .Values.ocpingress }}
 
         volumeMounts:
         - name: "{{ .Values.volumeMounts.kuiCertsName }}"

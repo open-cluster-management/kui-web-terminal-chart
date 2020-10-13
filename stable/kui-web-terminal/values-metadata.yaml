@@ -58,6 +58,16 @@ arch:
       - label: "s390x"
         value: "s390x"
 
+ocpingress:
+  __metadata:
+    name: "ocpingress"
+    label: "OCP ingress"
+    description: "Ingress route of the OCP cluster."
+    type: "string"
+    immutable: true
+    required: true
+    hidden: true
+
 global: 
   __metadata:
     label: "Global values"

@@ -14,6 +14,8 @@ replicaCount: 1
 pullSecret: null
 arch: ""
 
+ocpingress: ""
+
 global:
   pullPolicy: Always
   imageOverrides:
