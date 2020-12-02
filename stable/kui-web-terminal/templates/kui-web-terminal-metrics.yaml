@@ -1,0 +1,22 @@
+# Copyright (c) 2020 Red Hat, Inc.
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: kui-web-terminal-metrics
+  name: kui-web-terminal-metrics
+  # the service monitor has to be in the OCP Prometheus namespace
+  namespace: openshift-monitoring
+spec:
+  endpoints:
+  - interval: 30s
+    port: https-self
+    scheme: https
+    tlsConfig:
+      insecureSkipVerify: true
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
