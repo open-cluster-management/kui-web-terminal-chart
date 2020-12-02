@@ -1,0 +1,15 @@
+# Copyright (c) 2020 Red Hat, Inc.
+---
+apiVersion: rbac.authorization.k8s.ip/v1
+kind: RoleBinding
+metadata:
+  name: read-kui-metrics
+  namespace: {{ .Release.Namespace }}
+subjects:
+- kind: ServiceAccount
+  name: prometheus-k8s
+  namespace: openshift-monitoring
+roleRef:
+  kind: Role
+  name: kui-metrics-reader
+  apiGroup: rbac.authorization.k8s.io
