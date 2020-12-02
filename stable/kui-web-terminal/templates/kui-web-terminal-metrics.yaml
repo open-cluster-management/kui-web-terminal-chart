@@ -3,8 +3,6 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  labels:
-    k8s-app: kui-web-terminal-metrics
   name: kui-web-terminal-metrics
   # the service monitor has to be in the OCP Prometheus namespace
   namespace: openshift-monitoring
@@ -18,5 +16,4 @@ spec:
   namespaceSelector:
     matchNames:
     - {{ .Release.Namespace }}
-  selector:
-    matchLabels:
+  selector: {}
