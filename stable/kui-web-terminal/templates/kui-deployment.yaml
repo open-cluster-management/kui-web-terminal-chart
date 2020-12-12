@@ -64,7 +64,6 @@ spec:
       nodeSelector:
       {{ toYaml . | indent 8 }}
       {{- end }} 
-      automountServiceAccountToken: false
       terminationGracePeriodSeconds: 60
       containers:
       - name: {{ .Values.proxy.name }}
