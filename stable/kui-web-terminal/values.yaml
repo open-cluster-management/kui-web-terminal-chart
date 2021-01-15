@@ -62,7 +62,7 @@ affinity:
           - key: ocm-antiaffinity-selector
             operator: In
             values:
-            - kui
+            - kui-web-terminal
     - weight: 35
       podAffinityTerm:
         topologyKey: kubernetes.io/hostname
@@ -71,7 +71,7 @@ affinity:
           - key: ocm-antiaffinity-selector
             operator: In
             values:
-            - kui
+            - kui-web-terminal
 
 volumes:
   kuiCertsName: "kui-proxy-certs"

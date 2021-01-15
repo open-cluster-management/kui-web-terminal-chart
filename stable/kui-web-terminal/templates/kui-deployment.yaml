@@ -29,7 +29,7 @@ spec:
     metadata:
       labels:
         app: "{{ .Values.name }}"
-        ocm-antiaffinity-selector: "kui"
+        ocm-antiaffinity-selector: "kui-web-terminal"
         chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
         heritage: {{ .Release.Service }}
         k8s-app: "{{ .Values.proxy.name }}"
