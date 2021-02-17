@@ -12,7 +12,7 @@ Please refer to RHACM hub installation requirements.
 
 ## Resource requirements
 * At least 128Mb of available memory with a limit of 512Mb of available memory
-* At least 250m of available CPU with a limit of 500m CPU
+* At least 50m of available CPU with a limit of 500m CPU
 
 ## Installing the Chart
 A single instance of Visual Web Terminal is installed and managed by RHACM Installer and is not to be installed by regular users.
