@@ -6,7 +6,7 @@ language: generic
 
 branches:
   only:
-    - master
+    - main
     - /^[0-9]+\..*$/
     - /^v[0-9]+\..*$/
     - /^release-[0-9]+\..*$/
@@ -28,13 +28,13 @@ jobs:
         - make lint
     - stage: release-ff
       name: "Push commits to current release branch"
-      if: type = push AND branch =~ /^master$/
+      if: type = push AND branch =~ /^main$/
       script:
         - make
         - make release-ff
     - stage: auto
       name: "Auto trigger mch-repo"
-      if: type = push AND branch =~ /^master$/
+      if: type = push AND branch =~ /^main$/
       script: 
         - git clone --single-branch --branch master https://${MCH_REPO_BOT_TOKEN}@github.com/open-cluster-management/multicloudhub-repo.git
         - cd multicloudhub-repo
