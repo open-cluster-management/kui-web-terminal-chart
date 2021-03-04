@@ -12,6 +12,10 @@ export GITHUB_USER=<your github id>
 helm package stable/kui-web-terminal
 
 ## Testing the chart on an existing OpenShift environment
+
+### Clone the repo that manages the Open Cluster Management charts
+
+- [open-cluster-management/multicloudhub-repo](https://github.com/open-cluster-management/multicloudhub-repo/tree/main/multiclusterhub/charts)
 ### Copy the new helm tgz to multiclusterhub-repo
 ```
 cp kui-web-terminal-3.6.0.tgz ../multicloudhub-repo/multiclusterhub/charts
