@@ -55,7 +55,9 @@ spec:
                   {{- if .Values.arch }}
                   - {{ .Values.arch }}
                   {{- else }}
-                  - {{ template "kui-proxy.arch" . }}
+                  - amd64
+                  - ppc64le
+                  - s390x
                   {{- end }}
         {{- with .Values.affinity }}
         podAntiAffinity:
