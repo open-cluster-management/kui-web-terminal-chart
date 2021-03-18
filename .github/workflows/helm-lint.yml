@@ -2,8 +2,6 @@ name: Lint the Helm chart
 
 on:
   pull_request:
-    branches:
-    - main
 
 jobs:
   lint-chart:
