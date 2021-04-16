@@ -17,6 +17,8 @@ metadata:
     component: {{ .Values.name }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
+  annotations:
+    service.beta.openshift.io/serving-cert-secret-name: "{{ .Values.volumes.kuiCertsSecretName }}"
 spec:
   type: ClusterIP
   ports:
