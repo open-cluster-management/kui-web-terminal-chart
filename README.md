@@ -15,10 +15,10 @@ helm package stable/kui-web-terminal
 
 ### Clone the repo that manages the Open Cluster Management charts
 
-- [open-cluster-management/multicloudhub-repo](https://github.com/open-cluster-management/multicloudhub-repo/tree/main/multiclusterhub/charts)
+- [open-cluster-management/multiclusterhub-repo](https://github.com/open-cluster-management/multiclusterhub-repo/tree/main/multiclusterhub/charts)
 ### Copy the new helm tgz to multiclusterhub-repo
 ```
-cp kui-web-terminal-3.6.0.tgz ../multicloudhub-repo/multiclusterhub/charts
+cp kui-web-terminal-3.6.0.tgz ../multiclusterhub-repo/multiclusterhub/charts
 ```
 
 ### Modify the multiclusterhub deployment to allow writing of new Helm tgz
@@ -56,7 +56,7 @@ In the multiclusterhub-repo, run:
 ```
 make update-charts
 ```
-For more info see https://github.com/open-cluster-management/multicloudhub-repo#updating-chart-in-cluster
+For more info see https://github.com/open-cluster-management/multiclusterhub-repo#updating-chart-in-cluster
 
 ### Re-enable the multiclusterhub-operator
 This will re-create subscription. The controller for subscription is helm operator and it will re-deploy kui-web-terminal chart.
@@ -66,4 +66,4 @@ oc scale deployments/multiclusterhub-operator --replicas=1
 
 
 ## Getting the new chart picked up by an official build
-Once the changes are merged into this repo, see the information at https://github.com/open-cluster-management/multicloudhub-repo#updating-charts-in-multiclusterhubcharts
+Once the changes are merged into this repo, see the information at https://github.com/open-cluster-management/multiclusterhub-repo#updating-charts-in-multiclusterhubcharts
